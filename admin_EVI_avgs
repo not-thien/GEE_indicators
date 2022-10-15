@@ -240,10 +240,10 @@ app.boot = function() {
   app.createPanels();
   var main = ui.Panel({
     widgets: [
-      app.intro.panel,
-      app.filters.panel,
+      // app.intro.panel,
+      // app.filters.panel,
       app.picker.panel,
-      app.vis.panel,
+      // app.vis.panel,
       app.export.panel
     ],
     style: {width: '320px', padding: '8px'}
