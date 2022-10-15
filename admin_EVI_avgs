@@ -262,7 +262,7 @@ app.boot = function() {
     ],
     style: {width: '320px', padding: '8px'}
   });
-  Map.setCenter(-14.73,14.57, 7);
+  Map.setCenter(-14.73,14.57, 6);
   ui.root.insert(0, main);
   app.applyFilters();
 };
