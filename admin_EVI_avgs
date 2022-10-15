@@ -65,7 +65,7 @@ app.createPanels = function() {
   /* The panel for the picker section with corresponding widgets. */
   app.picker.panel = ui.Panel({
     widgets: [
-      ui.Label('2) Select an image', {fontWeight: 'bold'}),
+      ui.Label('2) Select an admin level', {fontWeight: 'bold'}),
       ui.Panel([
         app.picker.select,
         app.picker.centerButton
@@ -74,7 +74,7 @@ app.createPanels = function() {
     style: app.SECTION_STYLE
   });
 
-  // /* The visualization section. */
+  /* The visualization section. */
   // app.vis = {
   //   label: ui.Label(),
   //   // Create a select with a function that reacts to the "change" event.
@@ -193,13 +193,12 @@ app.createHelpers = function() {
   /** Refreshes the current map layer based on the UI widget states. */
   app.refreshMapLayer = function() {
     Map.clear();
-    var imageId = app.picker.select.getValue();
-    if (imageId) {
+    var adminLevel = app.picker.select.getValue();
+    if (adminLevel) {
       // If an image id is found, create an image.
       var image = ee.Image(app.COLLECTION_ID + '/' + imageId);
       // Add the image to the map with the corresponding visualization options.
-      var visOption = app.VIS_OPTIONS[app.vis.select.getValue()];
-      Map.addLayer(image, visOption.visParams, imageId);
+      Map.addLayer(image, {}, imageId);
     }
   };
 };
@@ -240,7 +239,7 @@ app.boot = function() {
   app.createPanels();
   var main = ui.Panel({
     widgets: [
-      // app.intro.panel,
+      app.intro.panel,
       // app.filters.panel,
       app.picker.panel,
       // app.vis.panel,
@@ -248,9 +247,9 @@ app.boot = function() {
     ],
     style: {width: '320px', padding: '8px'}
   });
-  Map.setCenter(-97, 26, 9);
+  Map.setCenter(-14.73,14.57, 7);
   ui.root.insert(0, main);
-  app.applyFilters();
+  // app.applyFilters();
 };
 
 app.boot();
