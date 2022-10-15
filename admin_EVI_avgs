@@ -63,7 +63,7 @@ app.createPanels = function() {
     })
   };
 
-  /* The panel for the picker section with corresponding widgets. */
+  /* The panel for the admin level picker section with corresponding widgets. */
   app.picker.panel = ui.Panel({
     widgets: [
       ui.Label('1) Select an admin level', {fontWeight: 'bold'}),
@@ -201,7 +201,7 @@ app.createHelpers = function() {
       console.log(adminLevel);
       // var image = ee.Image(app.COLLECTION_ID + '/' + imageId);
       // Add the image to the map with the corresponding visualization options.
-      Map.addLayer(app.ADMIN_LEVELS[adminlevel], {}, adminLevel);
+      Map.addLayer(app.ADMIN_LEVELS[adminLevel], {}, adminLevel);
     }
   };
 };
