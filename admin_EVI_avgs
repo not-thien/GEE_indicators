@@ -7,7 +7,6 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /**
  * To Do:
- * add in all admin levels
  * add evi function to applyFilters()
  * double check gDrive export works
 */
