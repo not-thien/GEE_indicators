@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var table = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1");
+var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
+    senegalCounties = ee.FeatureCollection("users/nguy3856/senegalAdminLevel2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // A UI to interactively filter a collection, select an individual image
 // from the results, display it with a variety of visualizations, and export it.
@@ -13,40 +14,40 @@ app.createPanels = function() {
   app.intro = {
     panel: ui.Panel([
       ui.Label({
-        value: 'EVI of Africa Explorer',
+        value: 'EVI of Senegal Explorer',
         style: {fontWeight: 'bold', fontSize: '24px', margin: '10px 5px'}
       }),
-      ui.Label('This app allows you to filter and export images ' +
-               'from the Landsat 8 EVI dataset.')
+      ui.Label('This app allows you to filter and export images & EVI averages' +
+               ' over different admin levels from the Landsat 8 dataset.')
     ])
   };
 
-  /* The collection filter controls. */
-  app.filters = {
-    mapCenter: ui.Checkbox({label: 'Filter to map center', value: true}),
-    startDate: ui.Textbox('YYYY-MM-DD', '2017-05-01'),
-    endDate: ui.Textbox('YYYY-MM-DD', '2017-09-01'),
-    applyButton: ui.Button('Apply filters', app.applyFilters),
-    loadingLabel: ui.Label({
-      value: 'Loading...',
-      style: {stretch: 'vertical', color: 'gray', shown: false}
-    })
-  };
+  // /* The collection filter controls. */
+  // app.filters = {
+  //   mapCenter: ui.Checkbox({label: 'Filter to map center', value: true}),
+  //   startDate: ui.Textbox('YYYY-MM-DD', '2017-05-01'),
+  //   endDate: ui.Textbox('YYYY-MM-DD', '2017-09-01'),
+  //   applyButton: ui.Button('Apply filters', app.applyFilters),
+  //   loadingLabel: ui.Label({
+  //     value: 'Loading...',
+  //     style: {stretch: 'vertical', color: 'gray', shown: false}
+  //   })
+  // };
 
-  /* The panel for the filter control widgets. */
-  app.filters.panel = ui.Panel({
-    widgets: [
-      ui.Label('1) Select filters', {fontWeight: 'bold'}),
-      ui.Label('Start date', app.HELPER_TEXT_STYLE), app.filters.startDate,
-      ui.Label('End date', app.HELPER_TEXT_STYLE), app.filters.endDate,
-      app.filters.mapCenter,
-      ui.Panel([
-        app.filters.applyButton,
-        app.filters.loadingLabel
-      ], ui.Panel.Layout.flow('horizontal'))
-    ],
-    style: app.SECTION_STYLE
-  });
+  // /* The panel for the filter control widgets. */
+  // app.filters.panel = ui.Panel({
+  //   widgets: [
+  //     ui.Label('1) Select filters', {fontWeight: 'bold'}),
+  //     ui.Label('Start date', app.HELPER_TEXT_STYLE), app.filters.startDate,
+  //     ui.Label('End date', app.HELPER_TEXT_STYLE), app.filters.endDate,
+  //     app.filters.mapCenter,
+  //     ui.Panel([
+  //       app.filters.applyButton,
+  //       app.filters.loadingLabel
+  //     ], ui.Panel.Layout.flow('horizontal'))
+  //   ],
+  //   style: app.SECTION_STYLE
+  // });
 
   /* The image picker section. */
   app.picker = {
