@@ -65,7 +65,7 @@ app.createPanels = function() {
   /* The panel for the picker section with corresponding widgets. */
   app.picker.panel = ui.Panel({
     widgets: [
-      ui.Label('2) Select an admin level', {fontWeight: 'bold'}),
+      ui.Label('1) Select an admin level', {fontWeight: 'bold'}),
       ui.Panel([
         app.picker.select,
         app.picker.centerButton
@@ -108,7 +108,7 @@ app.createPanels = function() {
     button: ui.Button({
       label: 'Export the current image to Drive',
       // React to the button's click event.
-      // onClick: function() {
+      onClick: function() {
       //   // Select the full image id.
       //   var imageIdTrailer = app.picker.select.getValue();
       //   var imageId = app.COLLECTION_ID + '/' + imageIdTrailer;
@@ -119,14 +119,15 @@ app.createPanels = function() {
       //     image: ee.Image(imageId).select(visOption.visParams.bands),
       //     description: 'L8_Export-' + imageIdTrailer,
       //   });
-      // }
+      console.log("sicko mode");
+      }
     })
   };
 
   /* The panel for the export section with corresponding widgets. */
   app.export.panel = ui.Panel({
     widgets: [
-      ui.Label('4) Start an export', {fontWeight: 'bold'}),
+      ui.Label('2) Start an export', {fontWeight: 'bold'}),
       app.export.button
     ],
     style: app.SECTION_STYLE
@@ -196,7 +197,8 @@ app.createHelpers = function() {
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
       // If an image id is found, create an image.
-      var image = ee.Image(app.COLLECTION_ID + '/' + imageId);
+      console.log(adminLevel);
+      // var image = ee.Image(app.COLLECTION_ID + '/' + imageId);
       // Add the image to the map with the corresponding visualization options.
       Map.addLayer(image, {}, imageId);
     }
