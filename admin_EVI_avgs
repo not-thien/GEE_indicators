@@ -138,32 +138,31 @@ app.createPanels = function() {
 
 /** Creates the app helper functions. */
 app.createHelpers = function() {
-  // /**
-  // * Enables or disables loading mode.
-  // * @param {boolean} enabled Whether loading mode is enabled.
-  // */
-  // app.setLoadingMode = function(enabled) {
-  //   // Set the loading label visibility to the enabled mode.
-  //   app.filters.loadingLabel.style().set('shown', enabled);
-  //   // Set each of the widgets to the given enabled mode.
-  //   var loadDependentWidgets = [
-  //     app.vis.select,
-  //     app.filters.startDate,
-  //     app.filters.endDate,
-  //     app.filters.applyButton,
-  //     app.filters.mapCenter,
-  //     app.picker.select,
-  //     app.picker.centerButton,
-  //     app.export.button
-  //   ];
-  //   loadDependentWidgets.forEach(function(widget) {
-  //     widget.setDisabled(enabled);
-  //   });
-  // };
+  /**
+  * Enables or disables loading mode.
+  * @param {boolean} enabled Whether loading mode is enabled.
+  */
+  app.setLoadingMode = function(enabled) {
+    // Set the loading label visibility to the enabled mode.
+    app.filters.loadingLabel.style().set('shown', enabled);
+    // Set each of the widgets to the given enabled mode.
+    var loadDependentWidgets = [
+      app.vis.select,
+      app.filters.startDate,
+      app.filters.endDate,
+      app.filters.applyButton,
+      app.filters.mapCenter,
+      app.picker.select,
+      app.picker.centerButton,
+      app.export.button
+    ];
+    loadDependentWidgets.forEach(function(widget) {
+      widget.setDisabled(enabled);
+    });
+  };
 
   /** Applies the selection filters currently selected in the UI. */
   app.applyFilters = function() {
-    console.log("apparently they autorun");
     app.picker.select.setValue(app.picker.select.items().get(0));
     app.refreshMapLayer();
   //   app.setLoadingMode(true);
@@ -202,7 +201,6 @@ app.createHelpers = function() {
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
       // If an image id is found, create an image.
-      console.log(adminLevel);
       // var image = ee.Image(app.COLLECTION_ID + '/' + imageId);
       // Add the image to the map with the corresponding visualization options.
       Map.addLayer(app.ADMIN_LEVELS[adminLevel], {}, adminLevel);
