@@ -209,7 +209,10 @@ app.createHelpers = function() {
 app.createConstants = function() {
   var states = ee.FeatureCollection(senegalStates);
   var counties = ee.FeatureCollection(senegalCounties);
-  app.ADMIN_LEVELS = [];
+  app.ADMIN_LEVELS = {
+    States: states,
+    Counties: counties
+  };
   app.COLLECTION_ID = 'LANDSAT/LC08/C01/T1_RT_TOA';
   app.SECTION_STYLE = {margin: '20px 0 0 0'};
   app.HELPER_TEXT_STYLE = {
