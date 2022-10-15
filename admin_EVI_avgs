@@ -22,7 +22,7 @@ app.createPanels = function() {
     ])
   };
 
-  // /* The collection filter controls. */
+  /* The collection filter controls. */
   // app.filters = {
   //   mapCenter: ui.Checkbox({label: 'Filter to map center', value: true}),
   //   startDate: ui.Textbox('YYYY-MM-DD', '2017-05-01'),
