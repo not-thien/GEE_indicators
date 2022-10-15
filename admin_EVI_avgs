@@ -207,8 +207,8 @@ app.createHelpers = function() {
 
 /** Creates the app constants. */
 app.createConstants = function() {
-  var states = ee.FeatureCollection();
-  var counties = ee.FeatureCollection();
+  var states = ee.FeatureCollection(senegalStates);
+  var counties = ee.FeatureCollection(senegalCounties);
   app.ADMIN_LEVELS = [];
   app.COLLECTION_ID = 'LANDSAT/LC08/C01/T1_RT_TOA';
   app.SECTION_STYLE = {margin: '20px 0 0 0'};
