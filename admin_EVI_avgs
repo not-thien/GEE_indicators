@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
-    senegalCounties = ee.FeatureCollection("users/nguy3856/senegalAdminLevel2");
+    senegalCounties = ee.FeatureCollection("users/nguy3856/senegalAdminLevel2"),
+    senegalCountry = ee.FeatureCollection("users/nguy3856/senegalAdminLevel0");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // A UI to interactively filter a collection, select an individual image
 // from the results, display it with a variety of visualizations, and export it.
@@ -49,7 +50,7 @@ app.createPanels = function() {
   //   style: app.SECTION_STYLE
   // });
 
-  /* The admin level picker section. */
+  /* admin level picker section. */
   app.picker = {
     // Create a select with a function that reacts to the "change" event.
     select: ui.Select({
@@ -63,7 +64,7 @@ app.createPanels = function() {
     })
   };
 
-  /* The panel for the admin level picker section with corresponding widgets. */
+  /* admin Level picker controls */
   app.picker.panel = ui.Panel({
     widgets: [
       ui.Label('1) Select an admin level', {fontWeight: 'bold'}),
@@ -125,7 +126,7 @@ app.createPanels = function() {
     })
   };
 
-  /* The panel for the export section with corresponding widgets. */
+  /* export section controls */
   app.export.panel = ui.Panel({
     widgets: [
       ui.Label('2) Start an export', {fontWeight: 'bold'}),
@@ -210,6 +211,7 @@ app.createHelpers = function() {
 app.createConstants = function() {
   var states = ee.FeatureCollection(senegalStates);
   var counties = ee.FeatureCollection(senegalCounties);
+  var senegal = ee.FeatureCollection(senegalCountry);
   app.ADMIN_LEVELS = {
     States: states,
     Counties: counties
