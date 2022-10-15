@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var table = ee.FeatureCollection("users/nguy3856/senegalAdminLevel2");
+var table = ee.FeatureCollection("users/nguy3856/senegalAdminLevel2"),
+    table2 = ee.FeatureCollection("users/nguy3856/senegalAdminLevel2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Make a button widget.
 var button = ui.Button('Click me!');
@@ -18,6 +19,6 @@ button.onClick(function() {
   print('Oh, yeah!');
 });
 
-var senegal = ee.FeatureCollection(table);
+var senegal = ee.FeatureCollection(table2);
 Map.addLayer(senegal, {}, 'Senegal');
 Map.centerObject(senegal);
