@@ -1,7 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
     senegalCounties = ee.FeatureCollection("users/nguy3856/senegalAdminLevel2"),
-    senegalCountry = ee.FeatureCollection("users/nguy3856/senegalAdminLevel0");
+    senegalCountry = ee.FeatureCollection("users/nguy3856/senegalAdminLevel0"),
+    senegalTownships = ee.FeatureCollection("users/nguy3856/senegalAdminLevel3"),
+    sAdminL4 = ee.FeatureCollection("users/nguy3856/senegalAdminLevel4");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /**
  * To Do:
@@ -223,10 +225,14 @@ app.createConstants = function() {
   var states = ee.FeatureCollection(senegalStates);
   var counties = ee.FeatureCollection(senegalCounties);
   var senegal = ee.FeatureCollection(senegalCountry);
+  var townships = ee.FeatureCollection(senegalTownships);
+  var level4 = ee.FeatureCollection(sAdminL4);
   app.ADMIN_LEVELS = {
     Country: senegal,
     States: states,
-    Counties: counties
+    Counties: counties,
+    Townships: townships,
+    'Administrative Level 4': level4
   };
   app.COLLECTION_ID = 'LANDSAT/LC08/C01/T1_RT_TOA';
   app.SECTION_STYLE = {margin: '20px 0 0 0'};
