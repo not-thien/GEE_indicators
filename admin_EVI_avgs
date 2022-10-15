@@ -24,16 +24,16 @@ app.createPanels = function() {
   };
 
   /* The collection filter controls. */
-  app.filters = {
-    mapCenter: ui.Checkbox({label: 'Filter to map center', value: true}),
-    startDate: ui.Textbox('YYYY-MM-DD', '2017-05-01'),
-    endDate: ui.Textbox('YYYY-MM-DD', '2017-09-01'),
-    applyButton: ui.Button('Apply filters', app.applyFilters),
-    loadingLabel: ui.Label({
-      value: 'Loading...',
-      style: {stretch: 'vertical', color: 'gray', shown: false}
-    })
-  };
+  // app.filters = {
+  //   mapCenter: ui.Checkbox({label: 'Filter to map center', value: true}),
+  //   startDate: ui.Textbox('YYYY-MM-DD', '2017-05-01'),
+  //   endDate: ui.Textbox('YYYY-MM-DD', '2017-09-01'),
+  //   applyButton: ui.Button('Apply filters', app.applyFilters),
+  //   loadingLabel: ui.Label({
+  //     value: 'Loading...',
+  //     style: {stretch: 'vertical', color: 'gray', shown: false}
+  //   })
+  // };
 
   // /* The panel for the filter control widgets. */
   // app.filters.panel = ui.Panel({
@@ -147,11 +147,11 @@ app.createHelpers = function() {
     app.filters.loadingLabel.style().set('shown', enabled);
     // Set each of the widgets to the given enabled mode.
     var loadDependentWidgets = [
-      app.vis.select,
-      app.filters.startDate,
-      app.filters.endDate,
-      app.filters.applyButton,
-      app.filters.mapCenter,
+      // app.vis.select,
+      // app.filters.startDate,
+      // app.filters.endDate,
+      // app.filters.applyButton,
+      // app.filters.mapCenter,
       app.picker.select,
       app.picker.centerButton,
       app.export.button
