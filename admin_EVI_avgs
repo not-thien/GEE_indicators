@@ -103,92 +103,92 @@ app.createPanels = function() {
   // // Default the select to the first value.
   // app.vis.select.setValue(app.vis.select.items().get(0));
 
-//   /* The export section. */
-//   app.export = {
-//     button: ui.Button({
-//       label: 'Export the current image to Drive',
-//       // React to the button's click event.
-//       onClick: function() {
-//         // Select the full image id.
-//         var imageIdTrailer = app.picker.select.getValue();
-//         var imageId = app.COLLECTION_ID + '/' + imageIdTrailer;
-//         // Get the visualization options.
-//         var visOption = app.VIS_OPTIONS[app.vis.select.getValue()];
-//         // Export the image to Drive.
-//         Export.image.toDrive({
-//           image: ee.Image(imageId).select(visOption.visParams.bands),
-//           description: 'L8_Export-' + imageIdTrailer,
-//         });
-//       }
-//     })
-//   };
+  /* The export section. */
+  app.export = {
+    button: ui.Button({
+      label: 'Export the current image to Drive',
+      // React to the button's click event.
+      // onClick: function() {
+      //   // Select the full image id.
+      //   var imageIdTrailer = app.picker.select.getValue();
+      //   var imageId = app.COLLECTION_ID + '/' + imageIdTrailer;
+      //   // Get the visualization options.
+      //   var visOption = app.VIS_OPTIONS[app.vis.select.getValue()];
+      //   // Export the image to Drive.
+      //   Export.image.toDrive({
+      //     image: ee.Image(imageId).select(visOption.visParams.bands),
+      //     description: 'L8_Export-' + imageIdTrailer,
+      //   });
+      // }
+    })
+  };
 
-//   /* The panel for the export section with corresponding widgets. */
-//   app.export.panel = ui.Panel({
-//     widgets: [
-//       ui.Label('4) Start an export', {fontWeight: 'bold'}),
-//       app.export.button
-//     ],
-//     style: app.SECTION_STYLE
-//   });
-// };
+  /* The panel for the export section with corresponding widgets. */
+  app.export.panel = ui.Panel({
+    widgets: [
+      ui.Label('4) Start an export', {fontWeight: 'bold'}),
+      app.export.button
+    ],
+    style: app.SECTION_STYLE
+  });
+};
 
 /** Creates the app helper functions. */
 app.createHelpers = function() {
-  /**
-   * Enables or disables loading mode.
-   * @param {boolean} enabled Whether loading mode is enabled.
-   */
-  app.setLoadingMode = function(enabled) {
-    // Set the loading label visibility to the enabled mode.
-    app.filters.loadingLabel.style().set('shown', enabled);
-    // Set each of the widgets to the given enabled mode.
-    var loadDependentWidgets = [
-      app.vis.select,
-      app.filters.startDate,
-      app.filters.endDate,
-      app.filters.applyButton,
-      app.filters.mapCenter,
-      app.picker.select,
-      app.picker.centerButton,
-      app.export.button
-    ];
-    loadDependentWidgets.forEach(function(widget) {
-      widget.setDisabled(enabled);
-    });
-  };
+  // /**
+  // * Enables or disables loading mode.
+  // * @param {boolean} enabled Whether loading mode is enabled.
+  // */
+  // app.setLoadingMode = function(enabled) {
+  //   // Set the loading label visibility to the enabled mode.
+  //   app.filters.loadingLabel.style().set('shown', enabled);
+  //   // Set each of the widgets to the given enabled mode.
+  //   var loadDependentWidgets = [
+  //     app.vis.select,
+  //     app.filters.startDate,
+  //     app.filters.endDate,
+  //     app.filters.applyButton,
+  //     app.filters.mapCenter,
+  //     app.picker.select,
+  //     app.picker.centerButton,
+  //     app.export.button
+  //   ];
+  //   loadDependentWidgets.forEach(function(widget) {
+  //     widget.setDisabled(enabled);
+  //   });
+  // };
 
-  /** Applies the selection filters currently selected in the UI. */
-  app.applyFilters = function() {
-    app.setLoadingMode(true);
-    var filtered = ee.ImageCollection(app.COLLECTION_ID);
+  // /** Applies the selection filters currently selected in the UI. */
+  // app.applyFilters = function() {
+  //   app.setLoadingMode(true);
+  //   var filtered = ee.ImageCollection(app.COLLECTION_ID);
 
-    // Filter bounds to the map if the checkbox is marked.
-    if (app.filters.mapCenter.getValue()) {
-      filtered = filtered.filterBounds(Map.getCenter());
-    }
+  //   // Filter bounds to the map if the checkbox is marked.
+  //   if (app.filters.mapCenter.getValue()) {
+  //     filtered = filtered.filterBounds(Map.getCenter());
+  //   }
 
-    // Set filter variables.
-    var start = app.filters.startDate.getValue();
-    if (start) start = ee.Date(start);
-    var end = app.filters.endDate.getValue();
-    if (end) end = ee.Date(end);
-    if (start) filtered = filtered.filterDate(start, end);
+  //   // Set filter variables.
+  //   var start = app.filters.startDate.getValue();
+  //   if (start) start = ee.Date(start);
+  //   var end = app.filters.endDate.getValue();
+  //   if (end) end = ee.Date(end);
+  //   if (start) filtered = filtered.filterDate(start, end);
 
-    // Get the list of computed ids.
-    var computedIds = filtered
-        .limit(app.IMAGE_COUNT_LIMIT)
-        .reduceColumns(ee.Reducer.toList(), ['system:index'])
-        .get('list');
+  //   // Get the list of computed ids.
+  //   var computedIds = filtered
+  //       .limit(app.IMAGE_COUNT_LIMIT)
+  //       .reduceColumns(ee.Reducer.toList(), ['system:index'])
+  //       .get('list');
 
-    computedIds.evaluate(function(ids) {
-      // Update the image picker with the given list of ids.
-      app.setLoadingMode(false);
-      app.picker.select.items().reset(ids);
-      // Default the image picker to the first id.
-      app.picker.select.setValue(app.picker.select.items().get(0));
-    });
-  };
+  //   computedIds.evaluate(function(ids) {
+  //     // Update the image picker with the given list of ids.
+  //     app.setLoadingMode(false);
+  //     app.picker.select.items().reset(ids);
+  //     // Default the image picker to the first id.
+  //     app.picker.select.setValue(app.picker.select.items().get(0));
+  //   });
+  // };
 
   /** Refreshes the current map layer based on the UI widget states. */
   app.refreshMapLayer = function() {
