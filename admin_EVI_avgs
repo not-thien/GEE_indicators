@@ -143,6 +143,7 @@ app.createHelpers = function() {
   * @param {boolean} enabled Whether loading mode is enabled.
   */
   app.setLoadingMode = function(enabled) {
+    console.log("loading");
     // Set the loading label visibility to the enabled mode.
     // app.filters.loadingLabel.style().set('shown', enabled);
     // Set each of the widgets to the given enabled mode.
