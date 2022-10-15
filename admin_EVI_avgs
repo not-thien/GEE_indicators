@@ -54,7 +54,7 @@ app.createPanels = function() {
   app.picker = {
     // Create a select with a function that reacts to the "change" event.
     select: ui.Select({
-      placeholder: 'Select an admin level',
+      // placeholder: 'Select an admin level',
       items: Object.keys(app.ADMIN_LEVELS),
       onChange: app.refreshMapLayer
     }),
@@ -161,8 +161,11 @@ app.createHelpers = function() {
   //   });
   // };
 
-  // /** Applies the selection filters currently selected in the UI. */
-  // app.applyFilters = function() {
+  /** Applies the selection filters currently selected in the UI. */
+  app.applyFilters = function() {
+    console.log("apparently they autorun");
+    app.picker.select.setValue(app.picker.select.items().get(0));
+    app.refreshMapLayer();
   //   app.setLoadingMode(true);
   //   var filtered = ee.ImageCollection(app.COLLECTION_ID);
 
@@ -191,7 +194,7 @@ app.createHelpers = function() {
   //     // Default the image picker to the first id.
   //     app.picker.select.setValue(app.picker.select.items().get(0));
   //   });
-  // };
+  };
 
   /** Refreshes the current map layer based on the UI widget states. */
   app.refreshMapLayer = function() {
