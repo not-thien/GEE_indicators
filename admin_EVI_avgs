@@ -3,6 +3,15 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
     senegalCounties = ee.FeatureCollection("users/nguy3856/senegalAdminLevel2"),
     senegalCountry = ee.FeatureCollection("users/nguy3856/senegalAdminLevel0");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+/**
+ * To Do:
+ * add in all admin levels
+ * add evi function to applyFilters()
+ * double check gDrive export works
+*/
+
+
+
 // A UI to interactively filter a collection, select an individual image
 // from the results, display it with a variety of visualizations, and export it.
 
