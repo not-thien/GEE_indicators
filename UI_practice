@@ -19,6 +19,8 @@ button.onClick(function() {
   print('Oh, yeah!');
 });
 
-var senegal = ee.FeatureCollection(table3);
-Map.addLayer(senegal, {}, 'Senegal');
-Map.centerObject(senegal);
+var senegalStates = ee.FeatureCollection(table3);
+Map.addLayer(senegalStates, {}, 'states');
+var senegalCounties = ee.FeatureCollection(table);
+Map.addLayer(senegalCounties, {}, 'counties');
+Map.centerObject(senegalCounties);
