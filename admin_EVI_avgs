@@ -200,7 +200,7 @@ app.createHelpers = function() {
       console.log(adminLevel);
       // var image = ee.Image(app.COLLECTION_ID + '/' + imageId);
       // Add the image to the map with the corresponding visualization options.
-      Map.addLayer(image, {}, imageId);
+      Map.addLayer(app.ADMIN_LEVELS[adminlevel], {}, adminLevel);
     }
   };
 };
