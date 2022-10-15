@@ -49,7 +49,7 @@ app.createPanels = function() {
   //   style: app.SECTION_STYLE
   // });
 
-  /* The image picker section. */
+  /* The admin level picker section. */
   app.picker = {
     // Create a select with a function that reacts to the "change" event.
     select: ui.Select({
