@@ -165,7 +165,8 @@ app.createHelpers = function() {
   app.applyFilters = function() {
     app.picker.select.setValue(app.picker.select.items().get(0));
     app.refreshMapLayer();
-  //   app.setLoadingMode(true);
+    app.setLoadingMode(true);
+    app.setLoadingMode(false);
   //   var filtered = ee.ImageCollection(app.COLLECTION_ID);
 
   //   // Filter bounds to the map if the checkbox is marked.
