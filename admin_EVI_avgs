@@ -216,6 +216,7 @@ app.createConstants = function() {
   var counties = ee.FeatureCollection(senegalCounties);
   var senegal = ee.FeatureCollection(senegalCountry);
   app.ADMIN_LEVELS = {
+    Country: senegal,
     States: states,
     Counties: counties
   };
