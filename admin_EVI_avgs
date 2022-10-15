@@ -53,7 +53,7 @@ app.createPanels = function() {
   app.picker = {
     // Create a select with a function that reacts to the "change" event.
     select: ui.Select({
-      placeholder: 'Select an image ID',
+      placeholder: 'Select an admin level',
       onChange: app.refreshMapLayer
     }),
     // Create a button that centers the map on a given object.
@@ -74,64 +74,64 @@ app.createPanels = function() {
     style: app.SECTION_STYLE
   });
 
-  /* The visualization section. */
-  app.vis = {
-    label: ui.Label(),
-    // Create a select with a function that reacts to the "change" event.
-    select: ui.Select({
-      items: Object.keys(app.VIS_OPTIONS),
-      onChange: function() {
-        // Update the label's value with the select's description.
-        var option = app.VIS_OPTIONS[app.vis.select.getValue()];
-        app.vis.label.setValue(option.description);
-        // Refresh the map layer.
-        app.refreshMapLayer();
-      }
-    })
-  };
+  // /* The visualization section. */
+  // app.vis = {
+  //   label: ui.Label(),
+  //   // Create a select with a function that reacts to the "change" event.
+  //   select: ui.Select({
+  //     items: Object.keys(app.VIS_OPTIONS),
+  //     onChange: function() {
+  //       // Update the label's value with the select's description.
+  //       var option = app.VIS_OPTIONS[app.vis.select.getValue()];
+  //       app.vis.label.setValue(option.description);
+  //       // Refresh the map layer.
+  //       app.refreshMapLayer();
+  //     }
+  //   })
+  // };
 
-  /* The panel for the visualization section with corresponding widgets. */
-  app.vis.panel = ui.Panel({
-    widgets: [
-      ui.Label('3) Select a visualization', {fontWeight: 'bold'}),
-      app.vis.select,
-      app.vis.label
-    ],
-    style: app.SECTION_STYLE
-  });
+  // /* The panel for the visualization section with corresponding widgets. */
+  // app.vis.panel = ui.Panel({
+  //   widgets: [
+  //     ui.Label('3) Select a visualization', {fontWeight: 'bold'}),
+  //     app.vis.select,
+  //     app.vis.label
+  //   ],
+  //   style: app.SECTION_STYLE
+  // });
 
-  // Default the select to the first value.
-  app.vis.select.setValue(app.vis.select.items().get(0));
+  // // Default the select to the first value.
+  // app.vis.select.setValue(app.vis.select.items().get(0));
 
-  /* The export section. */
-  app.export = {
-    button: ui.Button({
-      label: 'Export the current image to Drive',
-      // React to the button's click event.
-      onClick: function() {
-        // Select the full image id.
-        var imageIdTrailer = app.picker.select.getValue();
-        var imageId = app.COLLECTION_ID + '/' + imageIdTrailer;
-        // Get the visualization options.
-        var visOption = app.VIS_OPTIONS[app.vis.select.getValue()];
-        // Export the image to Drive.
-        Export.image.toDrive({
-          image: ee.Image(imageId).select(visOption.visParams.bands),
-          description: 'L8_Export-' + imageIdTrailer,
-        });
-      }
-    })
-  };
+//   /* The export section. */
+//   app.export = {
+//     button: ui.Button({
+//       label: 'Export the current image to Drive',
+//       // React to the button's click event.
+//       onClick: function() {
+//         // Select the full image id.
+//         var imageIdTrailer = app.picker.select.getValue();
+//         var imageId = app.COLLECTION_ID + '/' + imageIdTrailer;
+//         // Get the visualization options.
+//         var visOption = app.VIS_OPTIONS[app.vis.select.getValue()];
+//         // Export the image to Drive.
+//         Export.image.toDrive({
+//           image: ee.Image(imageId).select(visOption.visParams.bands),
+//           description: 'L8_Export-' + imageIdTrailer,
+//         });
+//       }
+//     })
+//   };
 
-  /* The panel for the export section with corresponding widgets. */
-  app.export.panel = ui.Panel({
-    widgets: [
-      ui.Label('4) Start an export', {fontWeight: 'bold'}),
-      app.export.button
-    ],
-    style: app.SECTION_STYLE
-  });
-};
+//   /* The panel for the export section with corresponding widgets. */
+//   app.export.panel = ui.Panel({
+//     widgets: [
+//       ui.Label('4) Start an export', {fontWeight: 'bold'}),
+//       app.export.button
+//     ],
+//     style: app.SECTION_STYLE
+//   });
+// };
 
 /** Creates the app helper functions. */
 app.createHelpers = function() {
