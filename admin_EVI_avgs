@@ -217,8 +217,8 @@ app.createHelpers = function() {
           'BLUE': app.L8.select('SR_B2')
         }
       ).rename('evi');
-      Map.addLayer(app.ADMIN_LEVELS[adminLevel], {}, adminLevel);
       Map.addLayer(evi, {}, 'evi');
+      Map.addLayer(app.ADMIN_LEVELS[adminLevel], {}, adminLevel);
     }
   };
 };
