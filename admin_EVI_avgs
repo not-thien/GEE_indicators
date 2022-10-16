@@ -65,13 +65,11 @@ app.createPanels = function() {
       // React to the button's click event.
       onClick: function() {
         // Select the full image id.
-        var imageIdTrailer = app.picker.select.getValue();
-        // Get the visualization options.
-        var visParams = app.tempEVI.imageParamBands;
+        var adminLevel = app.picker.select.getValue();
         // Export the image to Drive.
         Export.image.toDrive({
-          image: ee.Image(app.tempEVI).select(visOption.visParams.bands),
-          description: 'L8_Export-' + imageIdTrailer,
+          image: app.tempEVI.visualize({}),
+          description: 'L8_Export-' + adminLevel,
         });
       }
     })
