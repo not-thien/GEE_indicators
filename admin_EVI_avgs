@@ -238,9 +238,9 @@ app.createConstants = function() {
     'Administrative Level 4': level4
   };
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+             .filterBounds(senegal.geometry())
              .filterMetadata("CLOUD_COVER", "less_than", 1)
-             .mean()
-             .filterBounds(senegal.geometry());
+             .mean();
   app.COLLECTION_ID = 'LANDSAT/LC08/C01/T1_RT_TOA';
   app.SECTION_STYLE = {margin: '20px 0 0 0'};
   app.HELPER_TEXT_STYLE = {
