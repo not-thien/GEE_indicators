@@ -146,7 +146,7 @@ app.createHelpers = function() {
     Map.clear();
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
-      var evi = app.L8.expression(
+      var evi = app.L8.mean().expression(
         '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
         {
           'NIR': app.L8.select('SR_B5'),
@@ -182,8 +182,7 @@ app.createConstants = function() {
   //TODO: refactor so mean() is being calculated for each admin level in helper fxn
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
              .filterBounds(senegal.geometry())
-             .filterMetadata("CLOUD_COVER", "less_than", 1)
-             .mean();
+             .filterMetadata("CLOUD_COVER", "less_than", 1);
   app.SECTION_STYLE = {margin: '20px 0 0 0'};
   app.HELPER_TEXT_STYLE = {
       margin: '8px 0 -3px 8px',
