@@ -7,6 +7,7 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /**
  * TODO:
+ * figure out how to get averages of a single state
  * add date filtering
  * double check gDrive export works
  * add a table export/embed panel that has EVI data for all admin levels
