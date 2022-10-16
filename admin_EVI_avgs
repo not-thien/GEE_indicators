@@ -217,7 +217,8 @@ app.createHelpers = function() {
           'BLUE': app.L8.select('SR_B2')
         }
       ).rename('evi');
-      Map.addLayer(evi, app.rgbVis, 'EVI');
+      console.log(evi.bandNames);
+      Map.addLayer(evi, {}, 'EVI'); // evi band colors are unknown rn
       Map.addLayer(app.ADMIN_LEVELS[adminLevel], {}, adminLevel);
     }
   };
