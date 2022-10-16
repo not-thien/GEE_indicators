@@ -209,8 +209,7 @@ app.createHelpers = function() {
     Map.clear();
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
-      var img = app.L8;
-      var evi = img.expression(
+      var evi = app.L8.expression(
         '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
         {
           'NIR': app.L8.select('SR_B5'),
