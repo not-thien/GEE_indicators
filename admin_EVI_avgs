@@ -11,6 +11,7 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
  * add date filtering
  * double check gDrive export works
  * add a table export/embed panel that has EVI data for all admin levels
+ * separate adminLevel loading from EVI loading
 */
 
 // A UI to interactively filter Landsat 8 EVI in Senegal, 
