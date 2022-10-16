@@ -218,8 +218,7 @@ app.createHelpers = function() {
         }
       ).rename('evi');
       Map.addLayer(evi, {}, 'EVI'); // evi band colors are unknown rn
-      app.ADMIN_LEVELS[adminLevel].set('style', app.polyVis);
-      Map.addLayer(app.ADMIN_LEVELS[adminLevel], {}, adminLevel);
+      Map.addLayer(app.ADMIN_LEVELS[adminLevel].style(app.polyVis));
     }
   };
 };
