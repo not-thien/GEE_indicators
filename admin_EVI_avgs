@@ -67,10 +67,10 @@ app.createPanels = function() {
         // Select the full image id.
         var imageIdTrailer = app.picker.select.getValue();
         // Get the visualization options.
-        var visParams = 
+        var visParams = app.tempEVI.imageParamBands;
         // Export the image to Drive.
         Export.image.toDrive({
-          image: ee.Image(imageId).select(visOption.visParams.bands),
+          image: ee.Image(app.tempEVI).select(visOption.visParams.bands),
           description: 'L8_Export-' + imageIdTrailer,
         });
       }
