@@ -201,7 +201,7 @@ app.boot = function() {
     widgets: [
       app.intro.panel,
       app.picker.panel,
-      app.data.panel,
+      // app.data.panel,
       app.export.panel
     ],
     style: {width: '320px', padding: '8px'}
