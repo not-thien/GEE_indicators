@@ -239,7 +239,7 @@ app.createConstants = function() {
   };
   app.polyVis = {
     color: '00FFFF',
-    fillColor: 'ff475700'
+    fillColor: 'ff475700' // TODO: make transparent fill
   };
   //TODO: refactor so mean() is being calculated for each admin level in helper fxn
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
