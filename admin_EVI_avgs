@@ -218,7 +218,8 @@ app.createHelpers = function() {
         }
       ).rename('evi');
       Map.addLayer(evi, {}, 'EVI'); // evi band colors are unknown rn
-      Map.addLayer(app.ADMIN_LEVELS[adminLevel], app.polyVis, adminLevel);
+      app.ADMIN_LEVELS[adminLevel].set(app.polyVis);
+      Map.addLayer(app.ADMIN_LEVELS[adminLevel], {}, adminLevel);
     }
   };
 };
@@ -238,9 +239,9 @@ app.createConstants = function() {
     'Administrative Level 4': level4
   };
   app.polyVis = {
-    color: 'ffd700',
-    width: '.1px',    //TODO: make lines thin
-    fillColor: '0000' // TODO: make transparent fill
+    color: '000000',
+    lineWidth: 1,    //TODO: make lines thin
+    fillColor: '00000000' // TODO: make transparent fill
   };
   //TODO: refactor so mean() is being calculated for each admin level in helper fxn
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
