@@ -12,8 +12,8 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
  * add a table export/embed panel that has EVI data for all admin levels
 */
 
-// A UI to interactively filter a collection, select an individual image
-// from the results, display it with a variety of visualizations, and export it.
+// A UI to interactively filter Landsat 8 EVI in Senegal, 
+// select a date range, admin level, and export it.
 
 // The namespace for our application.  All the state is kept in here.
 var app = {};
