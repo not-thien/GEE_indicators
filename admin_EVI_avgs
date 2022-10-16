@@ -67,7 +67,7 @@ app.createPanels = function() {
         // Select the full image id.
         var imageIdTrailer = app.picker.select.getValue();
         // Get the visualization options.
-        var visOption = app.VIS_OPTIONS[app.vis.select.getValue()];
+        var visParams = 
         // Export the image to Drive.
         Export.image.toDrive({
           image: ee.Image(imageId).select(visOption.visParams.bands),
@@ -184,13 +184,20 @@ app.createConstants = function() {
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
              .filterBounds(senegal.geometry())
              .filterMetadata("CLOUD_COVER", "less_than", 1);
+  app.tempEVI = app.L8.mean().expression(
+        '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
+        {
+          'NIR': avgEVI.select('SR_B5'),
+          'RED': avgEVI.select('SR_B4'),
+          'BLUE': avgEVI.select('SR_B2')
+        }
+      ).rename('evi');
   app.SECTION_STYLE = {margin: '20px 0 0 0'};
   app.HELPER_TEXT_STYLE = {
       margin: '8px 0 -3px 8px',
       fontSize: '12px',
       color: 'gray'
   };
-  app.IMAGE_COUNT_LIMIT = 10;
 };
 
 /** Creates the application interface. */
