@@ -238,7 +238,7 @@ app.createConstants = function() {
     'Administrative Level 4': level4
   };
   app.polyVis = {
-    color: '0000ff',
+    color: 'ffa500',
     width: 1,    
     fillColor: '00000000'
   };
