@@ -146,12 +146,14 @@ app.createHelpers = function() {
     Map.clear();
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
-      var evi = app.L8.mean().expression(
+      //TODO: refactor so mean() is being calculated for each admin level in helper fxn
+      var avgEVI = app.L8.mean();
+      var evi = avgEVI.expression(
         '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
         {
-          'NIR': app.L8.select('SR_B5'),
-          'RED': app.L8.select('SR_B4'),
-          'BLUE': app.L8.select('SR_B2')
+          'NIR': avgEVI.select('SR_B5'),
+          'RED': avgEVI.select('SR_B4'),
+          'BLUE': avgEVI.select('SR_B2')
         }
       ).rename('evi');
       Map.addLayer(evi, {}, 'EVI'); // evi band colors are unknown rn
@@ -179,7 +181,6 @@ app.createConstants = function() {
     width: 1,    
     fillColor: '00000000'
   };
-  //TODO: refactor so mean() is being calculated for each admin level in helper fxn
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
              .filterBounds(senegal.geometry())
              .filterMetadata("CLOUD_COVER", "less_than", 1);
