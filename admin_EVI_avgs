@@ -237,6 +237,11 @@ app.createConstants = function() {
     Townships: townships,
     'Administrative Level 4': level4
   };
+  var rgbVis = {
+    min: [0, -15, 0],
+    max: [-0.15, 50, 0.15],
+    bands: ['scale', 'offset', 'scale']
+  }
   //TODO: refactor so mean() is being calculated for each admin level in helper fxn
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
              .filterBounds(senegal.geometry())
