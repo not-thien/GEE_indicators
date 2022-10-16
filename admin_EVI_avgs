@@ -217,7 +217,7 @@ app.createHelpers = function() {
           'BLUE': app.L8.select('SR_B2')
         }
       ).rename('evi');
-      Map.addLayer(evi, rgbVis, 'EVI');
+      Map.addLayer(evi, app.rgbVis, 'EVI');
       Map.addLayer(app.ADMIN_LEVELS[adminLevel], {}, adminLevel);
     }
   };
@@ -237,7 +237,7 @@ app.createConstants = function() {
     Townships: townships,
     'Administrative Level 4': level4
   };
-  var rgbVis = {
+  app.rgbVis = {
     min: [0, -15, 0],
     max: [-0.15, 50, 0.15],
     bands: ['scale', 'offset', 'scale']
