@@ -209,10 +209,16 @@ app.createHelpers = function() {
     Map.clear();
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
-      // If an image id is found, create an image.
-      // var image = ee.Image(app.COLLECTION_ID + '/' + imageId);
-      // Add the image to the map with the corresponding visualization options.
+      var evi = app.L8.expression(
+        '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
+        {
+          'NIR': pp_L8.select('SR_B5'),
+          'RED': pp_L8.select('SR_B4'),
+          'BLUE': pp_L8.select('SR_B2')
+        }
+      ).rename('evi');
       Map.addLayer(app.ADMIN_LEVELS[adminLevel], {}, adminLevel);
+      Map.addLayer(evi, {}, 'evi');
     }
   };
 };
