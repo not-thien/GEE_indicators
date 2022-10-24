@@ -38,7 +38,7 @@ app.createPanels = function() {
   app.filters = {
     startDate: ui.Textbox('YYYY-MM-DD'),
     endDate: ui.Textbox('YYYY-MM-DD'),
-    applyButton: ui.Button('Apply filters', app.applyFilters),
+    applyButton: ui.Button('Apply Date Filter', app.applyFilters),
     loadingLabel: ui.Label({
       value: 'Loading...',
       style: {stretch: 'vertical', color: 'gray', shown: false}
@@ -48,7 +48,7 @@ app.createPanels = function() {
   /* The panel for the filter control widgets. */
   app.filters.panel = ui.Panel({
     widgets: [
-      ui.Label('2) Select filters', {fontWeight: 'bold'}),
+      ui.Label('2) Select Date Range', {fontWeight: 'bold'}),
       ui.Label('Start date', app.HELPER_TEXT_STYLE), app.filters.startDate,
       ui.Label('End date', app.HELPER_TEXT_STYLE), app.filters.endDate,
       ui.Panel([
@@ -135,7 +135,7 @@ app.createHelpers = function() {
   /** Applies the selection filters currently selected in the UI. */
   app.applyFilters = function() {
     var filtered = app.L8;
-    console.log("applyFilters");
+
     // Set filter variables. & update EVI accordingly
     var start = app.filters.startDate.getValue();
     if (start) start = ee.Date(start);
@@ -144,8 +144,7 @@ app.createHelpers = function() {
     if (start) {
       filtered = filtered.filterDate(start, end); // repetitive use fails
       app.L8 = filtered;
-    } else {
-      console.log("else hit");
+    } else { // will run on startup only
       app.picker.select.setValue(app.picker.select.items().get(0)); // default top admin level
     }
     app.refreshMapLayer();
