@@ -145,6 +145,7 @@ app.createHelpers = function() {
       filtered = filtered.filterDate(start, end); // repetitive use fails
       app.L8 = filtered;
     } else {
+      console.log("else hit");
       app.picker.select.setValue(app.picker.select.items().get(0)); // default top admin level
     }
     app.refreshMapLayer();
