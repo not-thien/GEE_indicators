@@ -48,7 +48,7 @@ app.createPanels = function() {
   /* The panel for the filter control widgets. */
   app.filters.panel = ui.Panel({
     widgets: [
-      ui.Label('1) Select filters', {fontWeight: 'bold'}),
+      ui.Label('2) Select filters', {fontWeight: 'bold'}),
       ui.Label('Start date', app.HELPER_TEXT_STYLE), app.filters.startDate,
       ui.Label('End date', app.HELPER_TEXT_STYLE), app.filters.endDate,
       ui.Panel([
@@ -134,7 +134,6 @@ app.createHelpers = function() {
 
   /** Applies the selection filters currently selected in the UI. */
   app.applyFilters = function() {
-    app.picker.select.setValue(app.picker.select.items().get(0)); // default top admin level
     var filtered = app.L8;
 
     // Set filter variables. & update EVI accordingly
@@ -145,6 +144,8 @@ app.createHelpers = function() {
     if (start) {
       filtered = filtered.filterDate(start, end); // repetitive use fails
       app.L8 = filtered;
+    } else {
+      app.picker.select.setValue(app.picker.select.items().get(0)); // default top admin level
     }
     app.refreshMapLayer();
   };
@@ -156,6 +157,7 @@ app.createHelpers = function() {
     if (adminLevel) {
       //TODO: refactor so mean() is being calculated for each admin level in helper fxn
       var avgEVI = app.L8.mean();
+      // if dateFilter -> filter by date, then get mean()
       var evi = avgEVI.expression(
         '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
         {
