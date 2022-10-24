@@ -134,20 +134,17 @@ app.createHelpers = function() {
 
   /** Applies the selection filters currently selected in the UI. */
   app.applyFilters = function() {
-    app.picker.select.setValue(app.picker.select.items().get(0));
+    app.picker.select.setValue(app.picker.select.items().get(0)); // default top admin level
     var filtered = app.L8;
 
-    // Set filter variables.
+    // Set filter variables. & update EVI accordingly
     var start = app.filters.startDate.getValue();
     if (start) start = ee.Date(start);
     var end = app.filters.endDate.getValue();
     if (end) end = ee.Date(end);
     if (start) {
       filtered = filtered.filterDate(start, end);
-      app.picker.select.setValue(filtered);
-    } else {
-      // Default the image picker to the first id.
-      app.picker.select.setValue(app.picker.select.items().get(0));
+      app.L8 = filtered;
     }
     app.refreshMapLayer();
   };
