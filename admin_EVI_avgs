@@ -158,7 +158,7 @@ app.createHelpers = function() {
       if (app.DATE_RANGE.start) {
         EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
       }
-      var avgEVI = EVI;
+      var avgEVI = EVI.mean();
       // if dateFilter -> filter by date, then get mean()
       var evi = avgEVI.expression(
         '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
