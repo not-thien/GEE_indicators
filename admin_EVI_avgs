@@ -38,7 +38,7 @@ app.createPanels = function() {
   app.filters = {
     startDate: ui.Textbox('YYYY-MM-DD'),
     endDate: ui.Textbox('YYYY-MM-DD'),
-    applyButton: ui.Button('Apply Date Filter', app.applyFilters),
+    applyButton: ui.Button('Apply Date Filter', app.updateFilters),
     loadingLabel: ui.Label({
       value: 'Loading...',
       style: {stretch: 'vertical', color: 'gray', shown: false}
@@ -133,17 +133,15 @@ app.createHelpers = function() {
   };
 
   /** Applies the selection filters currently selected in the UI. */
-  app.applyFilters = function() {
-    var filtered = app.L8;
-
+  app.updateFilters = function() {
     // Set filter variables. & update EVI accordingly
     var start = app.filters.startDate.getValue();
     if (start) start = ee.Date(start);
     var end = app.filters.endDate.getValue();
     if (end) end = ee.Date(end);
-    if (start) {
-      filtered = filtered.filterDate(start, end); // repetitive use fails
-      app.L8 = filtered;
+    if (start) { //TODO: potential bug where date removed after running once
+      app.DATE_RANGE = {start: start,
+                        end: end};
     } else { // will run on startup only
       app.picker.select.setValue(app.picker.select.items().get(0)); // default top admin level
     }
@@ -156,7 +154,11 @@ app.createHelpers = function() {
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
       //TODO: refactor so mean() is being calculated for each admin level in helper fxn
-      var avgEVI = app.L8.mean();
+      var EVI = app.L8;
+      if (app.DATE_RANGE.start) {
+        EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
+      }
+      var avgEVI = EVI;
       // if dateFilter -> filter by date, then get mean()
       var evi = avgEVI.expression(
         '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
@@ -191,6 +193,7 @@ app.createConstants = function() {
     width: 1,    
     fillColor: '00000000'
   };
+  app.DATE_RANGE = {};
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
              .filterBounds(senegal.geometry())
              .filterMetadata("CLOUD_COVER", "less_than", 1);
@@ -219,7 +222,7 @@ app.boot = function() {
   });
   Map.setCenter(-14.73,14.57, 6);
   ui.root.insert(0, main);
-  app.applyFilters();
+  app.updateFilters();
 };
 
 app.boot();
