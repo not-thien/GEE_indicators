@@ -33,6 +33,31 @@ app.createPanels = function() {
                ' over different admin levels from the Landsat 8 dataset.')
     ])
   };
+  
+  /* The collection filter controls. */
+  app.filters = {
+    startDate: ui.Textbox('YYYY-MM-DD', '2017-05-01'),
+    endDate: ui.Textbox('YYYY-MM-DD', '2017-09-01'),
+    applyButton: ui.Button('Apply filters', app.applyFilters),
+    loadingLabel: ui.Label({
+      value: 'Loading...',
+      style: {stretch: 'vertical', color: 'gray', shown: false}
+    })
+  };
+
+  /* The panel for the filter control widgets. */
+  app.filters.panel = ui.Panel({
+    widgets: [
+      ui.Label('1) Select filters', {fontWeight: 'bold'}),
+      ui.Label('Start date', app.HELPER_TEXT_STYLE), app.filters.startDate,
+      ui.Label('End date', app.HELPER_TEXT_STYLE), app.filters.endDate,
+      ui.Panel([
+        app.filters.applyButton,
+        app.filters.loadingLabel
+      ], ui.Panel.Layout.flow('horizontal'))
+    ],
+    style: app.SECTION_STYLE
+  });
 
   /* admin level picker section. */
   app.picker = {
@@ -100,7 +125,6 @@ app.createHelpers = function() {
     // Set each of the widgets to the given enabled mode.
     var loadDependentWidgets = [
       app.picker.select,
-      app.picker.centerButton,
       app.export.button
     ];
     loadDependentWidgets.forEach(function(widget) {
@@ -111,35 +135,21 @@ app.createHelpers = function() {
   /** Applies the selection filters currently selected in the UI. */
   app.applyFilters = function() {
     app.picker.select.setValue(app.picker.select.items().get(0));
+    var filtered = app.L8;
+
+    // Set filter variables.
+    var start = app.filters.startDate.getValue();
+    if (start) start = ee.Date(start);
+    var end = app.filters.endDate.getValue();
+    if (end) end = ee.Date(end);
+    if (start) {
+      filtered = filtered.filterDate(start, end);
+      app.picker.select.setValue(filtered);
+    } else {
+      // Default the image picker to the first id.
+      app.picker.select.setValue(app.picker.select.items().get(0));
+    }
     app.refreshMapLayer();
-    // app.setLoadingMode(true);
-  //   var filtered = ee.ImageCollection(app.COLLECTION_ID);
-
-  //   // Filter bounds to the map if the checkbox is marked.
-  //   if (app.filters.mapCenter.getValue()) {
-  //     filtered = filtered.filterBounds(Map.getCenter());
-  //   }
-
-  //   // Set filter variables.
-  //   var start = app.filters.startDate.getValue();
-  //   if (start) start = ee.Date(start);
-  //   var end = app.filters.endDate.getValue();
-  //   if (end) end = ee.Date(end);
-  //   if (start) filtered = filtered.filterDate(start, end);
-
-  //   // Get the list of computed ids.
-  //   var computedIds = filtered
-  //       .limit(app.IMAGE_COUNT_LIMIT)
-  //       .reduceColumns(ee.Reducer.toList(), ['system:index'])
-  //       .get('list');
-
-  //   computedIds.evaluate(function(ids) {
-  //     // Update the image picker with the given list of ids.
-  //     app.setLoadingMode(false);
-  //     app.picker.select.items().reset(ids);
-  //     // Default the image picker to the first id.
-  //     app.picker.select.setValue(app.picker.select.items().get(0));
-  //   });
   };
 
   /** Refreshes the current map layer based on the UI widget states. */
@@ -202,7 +212,8 @@ app.boot = function() {
     widgets: [
       app.intro.panel,
       app.picker.panel,
-      // app.data.panel,
+      app.filters.panel,
+      // app.data.panel, // charts and tables here
       app.export.panel
     ],
     style: {width: '320px', padding: '8px'}
