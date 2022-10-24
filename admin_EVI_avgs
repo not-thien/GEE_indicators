@@ -36,8 +36,8 @@ app.createPanels = function() {
   
   /* The collection filter controls. */
   app.filters = {
-    startDate: ui.Textbox('YYYY-MM-DD', '2017-05-01'),
-    endDate: ui.Textbox('YYYY-MM-DD', '2017-09-01'),
+    startDate: ui.Textbox('YYYY-MM-DD'),
+    endDate: ui.Textbox('YYYY-MM-DD'),
     applyButton: ui.Button('Apply filters', app.applyFilters),
     loadingLabel: ui.Label({
       value: 'Loading...',
@@ -135,7 +135,7 @@ app.createHelpers = function() {
   /** Applies the selection filters currently selected in the UI. */
   app.applyFilters = function() {
     var filtered = app.L8;
-
+    console.log("applyFilters");
     // Set filter variables. & update EVI accordingly
     var start = app.filters.startDate.getValue();
     if (start) start = ee.Date(start);
