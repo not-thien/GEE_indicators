@@ -173,6 +173,7 @@ app.createHelpers = function() {
       })
     } else {
       app.findTrendInEVI(adminFC.geometry(), "Senegal");
+      // CALL OTHER DEGRADED LAND INDICATORS HERE
     }
   }
   
