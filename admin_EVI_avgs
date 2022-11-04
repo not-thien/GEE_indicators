@@ -156,8 +156,8 @@ app.createHelpers = function() {
   
   app.loopThruShapefile = function() {
     var adminLevel = app.picker.select.getValue();
-    var adminList = app.ADMIN_LEVELS[adminLevel];
-    adminList.aggregate_array('')
+    var adminList = app.ADMIN_LEVELS[adminLevel][0];
+    // adminList.aggregate_array('') // based on adminLevel, dissolve into list by that NAME_
   }
 
   /** Refreshes the current map layer based on the UI widget states. */
@@ -181,7 +181,7 @@ app.createHelpers = function() {
         }
       ).rename('evi');
       Map.addLayer(evi, {}, 'EVI'); // evi band colors are unknown rn
-      Map.addLayer(app.ADMIN_LEVELS[adminLevel].style(app.polyVis));
+      Map.addLayer(app.ADMIN_LEVELS[adminLevel][0].style(app.polyVis));
     }
   };
 };
@@ -194,11 +194,11 @@ app.createConstants = function() {
   var townships = ee.FeatureCollection(senegalTownships);
   var level4 = ee.FeatureCollection(sAdminL4);
   app.ADMIN_LEVELS = {
-    Country: senegal,
-    States: states,
-    Counties: counties,
-    Townships: townships,
-    'Administrative Level 4': level4
+    Country: [senegal, 0],
+    States: [states, 1],
+    Counties: [counties, 2],
+    Townships: [townships, 3],
+    'Administrative Level 4': [level4, 4]
   };
   app.polyVis = {
     color: '0000ff',
