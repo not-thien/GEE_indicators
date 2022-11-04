@@ -202,7 +202,7 @@ app.createHelpers = function() {
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
       app.loopThruShapefile();
-      Map.addLayer(app.ADMIN_LEVELS[adminLevel][0].style(app.polyVis)); //TODO: make top layer everytime
+      Map.addLayer(app.ADMIN_LEVELS[adminLevel][0].style(app.polyVis), {}, "Admin Level Borders"); //TODO: make top layer everytime
     }
   };
 };
