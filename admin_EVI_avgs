@@ -95,7 +95,7 @@ app.createPanels = function() {
   /* The data table section. */
   app.data = {
     trendInEVIChart: ui.Chart.image.series(app.L8, 
-      app.ADMIN_LEVELS[senegal][0].geometry(), 
+      app.ADMIN_LEVELS['Country'][0].geometry(), 
       ee.Reducer.mean(),
       200)
       .setOptions({
