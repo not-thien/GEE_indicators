@@ -171,12 +171,12 @@ app.createHelpers = function() {
     })
   }
   
-  app.findTrendInEVI = function(sectionGeom, sectionName) { // TODO: use sectionName for table entry
+  app.findTrendInEVI = function(sectionGeom, sectionName) { //TODO: use sectionName for table entry
     var EVI = app.L8.filterBounds(sectionGeom);
       if (app.DATE_RANGE.start) {
         EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
       }
-      var avgEVI = EVI.mean();
+      var avgEVI = EVI.mean(); //TODO: CHANGE TO TREND IN ???
       // if dateFilter -> filter by date, then get mean()
       var evi = avgEVI.expression(
         '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
@@ -187,7 +187,7 @@ app.createHelpers = function() {
         }
       ).rename('evi')
       .clip(sectionGeom);
-      Map.addLayer(evi, {}, sectionName, true, 0.5); // evi band colors are unknown rn
+      Map.addLayer(evi, {}, sectionName, true, 0.8); // evi band colors are unknown rn
   }
 
   /** Refreshes the current map layer based on the UI widget states. */
@@ -196,7 +196,7 @@ app.createHelpers = function() {
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
       app.loopThruShapefile();
-      Map.addLayer(app.ADMIN_LEVELS[adminLevel][0].style(app.polyVis));
+      Map.addLayer(app.ADMIN_LEVELS[adminLevel][0].style(app.polyVis)); //TODO: make top layer everytime
     }
   };
 };
