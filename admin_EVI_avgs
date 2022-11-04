@@ -111,8 +111,8 @@ app.createPanels = function() {
     widgets: [
       ui.Label('3) Degraded Land Indicators', {fontWeight: 'bold'}),
       app.data.trendInEVIChart,
-      app.data.trendInEVIchart,
-      app.data.trendInEVIchart
+      app.data.trendInEVIChart,
+      app.data.trendInEVIChart
       //ADD OTHER CHARTS HERE
     ],
     style: app.SECTION_STYLE
