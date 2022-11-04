@@ -94,7 +94,7 @@ app.createPanels = function() {
 
   /* The data table section. */
   app.data = {
-    trendInEVIChart: ui.Chart.image.series(app.L8, 
+    trendInEVIChart: ui.Chart.image.series(app.tempNDVI, //PLACE HOLDER CHART
       app.ADMIN_LEVELS['Country'][0].geometry(), 
       ee.Reducer.mean(),
       200)
@@ -235,6 +235,9 @@ app.createHelpers = function() {
 
 /** Creates the app constants. */
 app.createConstants = function() {
+  app.tempNDVI = ee.ImageCollection('NOAA/VIIRS/001/VNP13A1')
+    .filterDate('2021-01-01', '2022-01-01').select('NDVI');
+  
   var states = ee.FeatureCollection(senegalStates);
   var counties = ee.FeatureCollection(senegalCounties);
   var senegal = ee.FeatureCollection(senegalCountry);
