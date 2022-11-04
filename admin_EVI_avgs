@@ -187,7 +187,7 @@ app.createHelpers = function() {
         }
       ).rename('evi')
       .clip(sectionGeom);
-      Map.addLayer(evi, {}, sectionName); // evi band colors are unknown rn
+      Map.addLayer(evi, {}, sectionName, true, 0.5); // evi band colors are unknown rn
   }
 
   /** Refreshes the current map layer based on the UI widget states. */
