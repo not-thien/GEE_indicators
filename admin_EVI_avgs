@@ -155,9 +155,39 @@ app.createHelpers = function() {
   };
   
   app.loopThruShapefile = function() {
-    var adminLevel = app.picker.select.getValue();
-    var adminList = app.ADMIN_LEVELS[adminLevel][0];
-    // adminList.aggregate_array('') // based on adminLevel, dissolve into list by that NAME_
+    var adminLevel = app.ADMIN_LEVELS[app.picker.select.getValue()];
+    var adminNum = adminLevel[1];
+    var adminFC = adminLevel[0]; // FC = FeatureCollection
+    
+    // based on adminLevel, dissolve into list by that NAME_ and do the math for ALL degraded indicators
+    adminFC.aggregate_array('NAME_'+adminNum).evaluate(function (names) {
+      names.map(function (name) {
+        var section = adminFC
+          .filter(ee.Filter.equals('NAME_'+adminNum, name))
+          .first();
+        app.findTrendInEVI(section.geometry(), name);
+        // CALL OTHER DEGRADED LAND INDICATORS HERE
+      })
+    })
+  }
+  
+  app.findTrendInEVI = function(sectionGeom, sectionName) { // TODO: use sectionName for table entry
+    var EVI = app.L8.filterBounds(sectionGeom);
+      if (app.DATE_RANGE.start) {
+        EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
+      }
+      var avgEVI = EVI.mean();
+      // if dateFilter -> filter by date, then get mean()
+      var evi = avgEVI.expression(
+        '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
+        {
+          'NIR': avgEVI.select('SR_B5'),
+          'RED': avgEVI.select('SR_B4'),
+          'BLUE': avgEVI.select('SR_B2')
+        }
+      ).rename('evi')
+      .clip(sectionGeom);
+      Map.addLayer(evi, {}, 'sectionName'); // evi band colors are unknown rn
   }
 
   /** Refreshes the current map layer based on the UI widget states. */
