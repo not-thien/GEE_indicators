@@ -187,7 +187,7 @@ app.createHelpers = function() {
         }
       ).rename('evi')
       .clip(sectionGeom);
-      Map.addLayer(evi, {}, 'sectionName'); // evi band colors are unknown rn
+      Map.addLayer(evi, {}, sectionName); // evi band colors are unknown rn
   }
 
   /** Refreshes the current map layer based on the UI widget states. */
@@ -195,22 +195,7 @@ app.createHelpers = function() {
     Map.clear();
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
-      //TODO: refactor so mean() is being calculated for each admin level in helper fxn
-      var EVI = app.L8;
-      if (app.DATE_RANGE.start) {
-        EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
-      }
-      var avgEVI = EVI.mean();
-      // if dateFilter -> filter by date, then get mean()
-      var evi = avgEVI.expression(
-        '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
-        {
-          'NIR': avgEVI.select('SR_B5'),
-          'RED': avgEVI.select('SR_B4'),
-          'BLUE': avgEVI.select('SR_B2')
-        }
-      ).rename('evi');
-      Map.addLayer(evi, {}, 'EVI'); // evi band colors are unknown rn
+      app.loopThruShapefile();
       Map.addLayer(app.ADMIN_LEVELS[adminLevel][0].style(app.polyVis));
     }
   };
