@@ -153,6 +153,12 @@ app.createHelpers = function() {
     }
     app.refreshMapLayer();
   };
+  
+  app.loopThruShapefile = function() {
+    var adminLevel = app.picker.select.getValue();
+    var adminList = app.ADMIN_LEVELS[adminLevel];
+    adminList.aggregate_array('')
+  }
 
   /** Refreshes the current map layer based on the UI widget states. */
   app.refreshMapLayer = function() {
