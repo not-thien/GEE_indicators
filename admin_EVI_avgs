@@ -92,6 +92,30 @@ app.createPanels = function() {
     style: app.SECTION_STYLE
   });
 
+  /* The data table section. */
+  app.data = {
+    trendInEVIChart: ui.Chart.image.series(app.L8, 
+      app.ADMIN_LEVELS[senegal][0].geometry(), 
+      ee.Reducer.mean(),
+      200)
+      .setOptions({
+        title: 'EVI Trend Over Time',
+        vAxis: {title: 'EVI'},
+        lineWidth: 1,
+        pointSize: 3,
+      })
+  };
+
+  /* data table section controls */
+  app.data.panel = ui.Panel({
+    widgets: [
+      ui.Label('3) Degraded Land Indicators', {fontWeight: 'bold'}),
+      app.data.trendInEVIChart
+      //ADD OTHER CHARTS HERE
+    ],
+    style: app.SECTION_STYLE
+  });
+  
   /* The export section. */
   app.export = {
     button: ui.Button({
@@ -119,19 +143,6 @@ app.createPanels = function() {
     style: app.SECTION_STYLE
   });
   
-  /* The data table section. */
-  app.data = {
-    
-  };
-
-  /* data table section controls */
-  app.data.panel = ui.Panel({
-    widgets: [
-      ui.Label('3) Degraded Land Indicators', {fontWeight: 'bold'}),
-      // app.export.button
-    ],
-    style: app.SECTION_STYLE
-  });
 };
 
 /** Creates the app helper functions. */
@@ -263,13 +274,13 @@ app.boot = function() {
       app.intro.panel,
       app.picker.panel,
       app.filters.panel,
-      // app.data.panel, // charts and tables here
+      app.data.panel, // charts and tables here
       app.export.panel
     ],
     style: {width: '320px', padding: '8px'}
   });
   Map.setCenter(-14.73,14.57, 6);
-  ui.root.insert(0, main);
+  ui.root.insert(0, main); // potential issue with resetting charts at a specific position
   app.updateFilters();
 };
 
