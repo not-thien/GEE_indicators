@@ -112,8 +112,22 @@ app.createPanels = function() {
   /* export section controls */
   app.export.panel = ui.Panel({
     widgets: [
-      ui.Label('3) Start an export', {fontWeight: 'bold'}),
+      ui.Label('4) Start an export', {fontWeight: 'bold'}),
       app.export.button
+    ],
+    style: app.SECTION_STYLE
+  });
+  
+  /* The data table section. */
+  app.data = {
+    
+  };
+
+  /* data table section controls */
+  app.data.panel = ui.Panel({
+    widgets: [
+      ui.Label('3) Degraded Land Indicators', {fontWeight: 'bold'}),
+      // app.export.button
     ],
     style: app.SECTION_STYLE
   });
