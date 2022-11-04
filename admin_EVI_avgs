@@ -159,16 +159,21 @@ app.createHelpers = function() {
     var adminNum = adminLevel[1];
     var adminFC = adminLevel[0]; // FC = FeatureCollection
     
-    // based on adminLevel, dissolve into list by that NAME_ and do the math for ALL degraded indicators
-    adminFC.aggregate_array('NAME_'+adminNum).evaluate(function (names) {
-      names.map(function (name) {
-        var section = adminFC
-          .filter(ee.Filter.equals('NAME_'+adminNum, name))
-          .first();
-        app.findTrendInEVI(section.geometry(), name);
-        // CALL OTHER DEGRADED LAND INDICATORS HERE
+    // based on adminLevel, dissolve into list by that NAME_ and do the math for ALL degraded indicators.
+    //FYI: does not work w/ country, needs special case
+    if (adminNum !== 0) {
+      adminFC.aggregate_array('NAME_'+adminNum).evaluate(function (names) {
+        names.map(function (name) {
+          var section = adminFC
+            .filter(ee.Filter.equals('NAME_'+adminNum, name))
+            .first();
+          app.findTrendInEVI(section.geometry(), name);
+          // CALL OTHER DEGRADED LAND INDICATORS HERE
+        })
       })
-    })
+    } else {
+      app.findTrendInEVI(adminFC.geometry(), "Senegal");
+    }
   }
   
   app.findTrendInEVI = function(sectionGeom, sectionName) { //TODO: use sectionName for table entry
