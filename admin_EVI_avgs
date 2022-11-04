@@ -7,17 +7,18 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /**
  * TODO:
- * figure out how to get averages of a single state
- * add date filtering
  * double check gDrive export works
  * add a table export/embed panel that has EVI data for all admin levels
  * separate adminLevel loading from EVI loading
+ * add section selection functionality on click, localizing data to that section
+ * add a return button to go back to big picture view
 */
 
 /**
  * MINOR BUGS
  * applying date filter resets admin level, if no start date provided
  * removing start date from text box does not remove start date
+ * admin border not visible on top
 */
 
 // A UI to interactively filter Landsat 8 EVI in Senegal, 
