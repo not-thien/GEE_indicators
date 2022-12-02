@@ -55,7 +55,7 @@ app.createPanels = function() {
   /* The panel for the filter control widgets. */
   app.filters.panel = ui.Panel({
     widgets: [
-      ui.Label('2) Select Date Range', {fontWeight: 'bold'}),
+      ui.Label('3) Select Date Range (if applicable to indicator)', {fontWeight: 'bold'}),
       ui.Label('Start date', app.HELPER_TEXT_STYLE), app.filters.startDate,
       ui.Label('End date', app.HELPER_TEXT_STYLE), app.filters.endDate,
       ui.Panel([
@@ -109,7 +109,7 @@ app.createPanels = function() {
   /* data table section controls */
   app.data.panel = ui.Panel({
     widgets: [
-      ui.Label('3) Degraded Land Indicators', {fontWeight: 'bold'}),
+      ui.Label('4) Degraded Land Indicators', {fontWeight: 'bold'}),
       app.data.trendInEVIChart,
       //ADD OTHER CHARTS HERE
     ],
@@ -137,7 +137,7 @@ app.createPanels = function() {
   /* export section controls */
   app.export.panel = ui.Panel({
     widgets: [
-      ui.Label('4) Start an export', {fontWeight: 'bold'}),
+      ui.Label('5) Start an export', {fontWeight: 'bold'}),
       app.export.button
     ],
     style: app.SECTION_STYLE
