@@ -215,7 +215,7 @@ app.createHelpers = function() {
             .first();
           // WILL NEED TO REFACTOR WHEN MULTIPLE INDICATORS SUPPORTED
           var indicatorSelected = app.INDICATORS[app.indicators.indicatorSelection.getValue()];
-          if (indicatorSelected == maxTrend) {
+          if (indicatorSelected == 'maxTrend') {
             app.findTrendInEVI(section.geometry(), name);
           }
           // CALL OTHER DEGRADED LAND INDICATORS HERE
@@ -309,9 +309,9 @@ app.createConstants = function() {
     'Administrative Level 4': [level4, 4]
   };
   app.INDICATORS = {
-    'Bottom quartile of yearly EVI maxes (linear trend)': maxTrend, 
-    'Trend in length of season': seasonLength,
-    'Trend in start of season': seasonStart,
+    'Bottom quartile of yearly EVI maxes (linear trend)': 'maxTrend', 
+    'Trend in length of season': 'seasonLength',
+    'Trend in start of season': 'seasonStart',
   }
   app.polyVis = {
     color: '0000ff',
