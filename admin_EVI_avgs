@@ -219,6 +219,8 @@ app.createHelpers = function() {
     //   }
     // ).rename('evi')
     // .clip(sectionGeom);
+    // Map.addLayer(evi, {}, sectionName, true, 0.8); // evi band colors are unknown rn
+    // visualize it
     var createTimeBand = function(image) {
       return image.addBands(image.metadata('DATE_PRODUCT_GENERATED').divide(1e10));
     };
@@ -233,12 +235,12 @@ app.createHelpers = function() {
       
       // preprocessing the landsat images & adding timestamps
       var pp_L8 = EVI
-      .filterBounds(geometry)
+      .filterBounds(sectionGeom)
       .filterDate(startDate, endDate)
       .filterMetadata("CLOUD_COVER", "less_than", 1)
       .map(createTimeBand)
       .max() 
-      .clip(geometry);
+      .clip(sectionGeom);
       
       // EVI calculated via the USGS definition of EVI equation
       var yearEvi = pp_L8.expression('2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))', {
@@ -258,12 +260,8 @@ app.createHelpers = function() {
     
     // reduce the ImageCollection w/ linear fit w/ time as x-axis and EVI as y-axis
     var linearFit = timedEviMaxes.select(['DATE_PRODUCT_GENERATED', 'evi']).reduce(ee.Reducer.linearFit());
-    print('info on the LF: ', linearFit);
     
-    
-    // Map.addLayer(evi, {}, sectionName, true, 0.8); // evi band colors are unknown rn
-    // visualize it
-    Map.addLayer(linearFit, {min: [0, -15, 0], max: [-0.15, 50, 0.15], bands: ['scale', 'offset', 'scale']}, 'EVI linear fit');
+    Map.addLayer(linearFit, {min: [0, -15, 0], max: [-0.15, 50, 0.15], bands: ['scale', 'offset', 'scale']}, sectionName);
     
   }
 
