@@ -41,6 +41,14 @@ app.createPanels = function() {
     ])
   };
   
+  /* Indicator selection controls */
+  app.indicators = {
+    indicatorSelection: ui.Select({
+      items: Object.keys(app.INDICATORS)
+    }),
+    applyButton: ui.Button('Apply Indicator(s)', app.refreshMapLayer),
+  };
+  
   /* The collection filter controls. */
   app.filters = {
     startDate: ui.Textbox('YYYY-MM-DD'),
@@ -186,19 +194,26 @@ app.createHelpers = function() {
     var adminFC = adminLevel[0]; // FC = FeatureCollection
     
     // based on adminLevel, dissolve into list by that NAME_ and do the math for ALL degraded indicators.
-    //FYI: does not work w/ country, needs special case
+    //FYI: does not work easily w/ country, needs special case
     if (adminNum !== 0) {
       adminFC.aggregate_array('NAME_'+adminNum).evaluate(function (names) {
         names.map(function (name) {
           var section = adminFC
             .filter(ee.Filter.equals('NAME_'+adminNum, name))
             .first();
-          app.findTrendInEVI(section.geometry(), name);
+          // WILL NEED TO REFACTOR WHEN MULTIPLE INDICATORS SUPPORTED
+          var indicatorSelected = app.INDICATORS[app.indicators.indicatorSelection.getValue()];
+          if (indicatorSelected == maxTrend) {
+            app.findTrendInEVI(section.geometry(), name);
+          }
           // CALL OTHER DEGRADED LAND INDICATORS HERE
         })
       })
     } else {
-      app.findTrendInEVI(adminFC.geometry(), "Senegal");
+      var indicatorSelected = app.INDICATORS[app.indicators.indicatorSelection.getValue()];
+      if (indicatorSelected == maxTrend) {
+        app.findTrendInEVI(section.geometry(), "Senegal");
+      }
       // CALL OTHER DEGRADED LAND INDICATORS HERE
     }
   }
@@ -281,6 +296,11 @@ app.createConstants = function() {
     Townships: [townships, 3],
     'Administrative Level 4': [level4, 4]
   };
+  app.INDICATORS = {
+    'Bottom quartile of yearly EVI maxes (linear trend)': maxTrend, 
+    'Trend in length of season': seasonLength,
+    'Trend in start of season': seasonStart,
+  }
   app.polyVis = {
     color: '0000ff',
     width: 1,    
