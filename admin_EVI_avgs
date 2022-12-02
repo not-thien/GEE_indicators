@@ -49,6 +49,18 @@ app.createPanels = function() {
     applyButton: ui.Button('Apply Indicator(s)', app.refreshMapLayer),
   };
   
+  /* Indicator selection panel */
+  app.indicators.panel = ui.Panel({
+    widgets: [
+      ui.Label('2) Select degraded land indicators', {fontWeight: 'bold'}),
+      ui.Panel([
+        app.indicators.select,
+        app.picker.applyButton
+      ], ui.Panel.Layout.flow('horizontal'))
+    ],
+    style: app.SECTION_STYLE
+  });
+  
   /* The collection filter controls. */
   app.filters = {
     startDate: ui.Textbox('YYYY-MM-DD'),
@@ -327,6 +339,7 @@ app.boot = function() {
     widgets: [
       app.intro.panel,
       app.picker.panel,
+      app.indicators.panel,
       app.filters.panel,
       app.data.panel, // charts and tables here
       app.export.panel
