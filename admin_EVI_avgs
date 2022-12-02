@@ -205,21 +205,64 @@ app.createHelpers = function() {
   
   app.findTrendInEVI = function(sectionGeom, sectionName) { //TODO: use sectionName for table entry
     var EVI = app.L8.filterBounds(sectionGeom);
-      if (app.DATE_RANGE.start) {
-        EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
-      }
-      var avgEVI = EVI.mean(); //TODO: CHANGE TO TREND IN ???
-      // if dateFilter -> filter by date, then get mean()
-      var evi = avgEVI.expression(
-        '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
-        {
-          'NIR': avgEVI.select('SR_B5'),
-          'RED': avgEVI.select('SR_B4'),
-          'BLUE': avgEVI.select('SR_B2')
-        }
-      ).rename('evi')
-      .clip(sectionGeom);
-      Map.addLayer(evi, {}, sectionName, true, 0.8); // evi band colors are unknown rn
+    // if (app.DATE_RANGE.start) {
+    //   EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
+    // }
+    // var avgEVI = EVI.mean(); //TODO: CHANGE TO TREND IN ???
+    // // if dateFilter -> filter by date, then get mean()
+    // var evi = avgEVI.expression(
+    //   '2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))',
+    //   {
+    //     'NIR': avgEVI.select('SR_B5'),
+    //     'RED': avgEVI.select('SR_B4'),
+    //     'BLUE': avgEVI.select('SR_B2')
+    //   }
+    // ).rename('evi')
+    // .clip(sectionGeom);
+    var createTimeBand = function(image) {
+      return image.addBands(image.metadata('DATE_PRODUCT_GENERATED').divide(1e10));
+    };
+    
+    // need an array to hold all the images
+    var yearlyMaxes = [];
+    
+    // loop thru all the years we wanna look at
+    for (var year = 2013; year < 2021; year++) { 
+      var startDate = year + "-01-01"
+      var endDate = year + "-12-31"
+      
+      // preprocessing the landsat images & adding timestamps
+      var pp_L8 = EVI
+      .filterBounds(geometry)
+      .filterDate(startDate, endDate)
+      .filterMetadata("CLOUD_COVER", "less_than", 1)
+      .map(createTimeBand)
+      .max() 
+      .clip(geometry);
+      
+      // EVI calculated via the USGS definition of EVI equation
+      var yearEvi = pp_L8.expression('2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))', {
+      'NIR': pp_L8.select('SR_B5'),
+      'RED': pp_L8.select('SR_B4'),
+      'BLUE': pp_L8.select('SR_B2')
+      })
+      .rename('evi')
+      .addBands(pp_L8.select('DATE_PRODUCT_GENERATED')); // making sure the timestamp carries over
+      
+      // add the new image to the list
+      yearlyMaxes.push(yearEvi);
+    }
+    
+    // convert the list into an actual IC
+    var timedEviMaxes = ee.ImageCollection(yearlyMaxes);
+    // print(timedEviMaxes);
+    
+    // reduce the ImageCollection w/ linear fit w/ time as x-axis and EVI as y-axis
+    var linearFit = timedEviMaxes.select(['DATE_PRODUCT_GENERATED', 'evi']).reduce(ee.Reducer.linearFit());
+    print('info on the LF: ', linearFit);
+    
+    
+    Map.addLayer(linearfit, {}, sectionName, true, 0.8); // evi band colors are unknown rn
   }
 
   /** Refreshes the current map layer based on the UI widget states. */
