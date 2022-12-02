@@ -223,7 +223,7 @@ app.createHelpers = function() {
       })
     } else {
       var indicatorSelected = app.INDICATORS[app.indicators.indicatorSelection.getValue()];
-      if (indicatorSelected == maxTrend) {
+      if (indicatorSelected == 'maxTrend') {
         app.findTrendInEVI(section.geometry(), "Senegal");
       }
       // CALL OTHER DEGRADED LAND INDICATORS HERE
