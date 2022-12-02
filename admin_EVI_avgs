@@ -55,7 +55,7 @@ app.createPanels = function() {
       ui.Label('2) Select degraded land indicators', {fontWeight: 'bold'}),
       ui.Panel([
         app.indicators.select,
-        app.picker.applyButton
+        app.indicators.applyButton
       ], ui.Panel.Layout.flow('horizontal'))
     ],
     style: app.SECTION_STYLE
