@@ -255,14 +255,16 @@ app.createHelpers = function() {
     
     // convert the list into an actual IC
     var timedEviMaxes = ee.ImageCollection(yearlyMaxes);
-    // print(timedEviMaxes);
     
     // reduce the ImageCollection w/ linear fit w/ time as x-axis and EVI as y-axis
     var linearFit = timedEviMaxes.select(['DATE_PRODUCT_GENERATED', 'evi']).reduce(ee.Reducer.linearFit());
     print('info on the LF: ', linearFit);
     
     
-    Map.addLayer(linearfit, {}, sectionName, true, 0.8); // evi band colors are unknown rn
+    // Map.addLayer(evi, {}, sectionName, true, 0.8); // evi band colors are unknown rn
+    // visualize it
+    Map.addLayer(linearFit, {min: [0, -15, 0], max: [-0.15, 50, 0.15], bands: ['scale', 'offset', 'scale']}, 'EVI linear fit');
+    
   }
 
   /** Refreshes the current map layer based on the UI widget states. */
