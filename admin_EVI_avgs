@@ -220,19 +220,32 @@ app.createHelpers = function() {
             .filter(ee.Filter.equals('NAME_'+adminNum, name))
             .first();
           // WILL NEED TO REFACTOR WHEN MULTIPLE INDICATORS SUPPORTED
-          var indicatorSelected = app.INDICATORS[app.indicators.indicatorSelection.getValue()];
-          if (indicatorSelected == 'maxTrend') {
-            app.findTrendInEVI(section.geometry(), name);
+          // var indicatorSelected = app.INDICATORS[app.indicators.indicatorSelection.getValue()];
+          for (var ind in app.SELECTED_INDS) { // loop thru all checkboxes
+            if (ind.checkbox.getValue()) {
+              var indicatorSelected = app.INDICATORS[ind.indicator];
+              if (indicatorSelected == 'maxTrend') {
+                app.findTrendInEVI(section.geometry(), name);
+              } else if (indicatorSelected == 'seasonLength') {
+                app.findTrendInSeasonLength(); //TODO: write this
+              }
+              // CALL OTHER DEGRADED LAND INDICATORS HERE
+            }
           }
-          // CALL OTHER DEGRADED LAND INDICATORS HERE
         })
       })
-    } else {
-      var indicatorSelected = app.INDICATORS[app.indicators.indicatorSelection.getValue()];
-      if (indicatorSelected == 'maxTrend') {
-        app.findTrendInEVI(section.geometry(), "Senegal");
+    } else { // special case for whole country admin level
+      for (var ind in app.SELECTED_INDS) {
+        if (ind.checkbox.getValue()) {
+          var indicatorSelected = app.INDICATORS[ind.indicator];
+          if (indicatorSelected == 'maxTrend') {
+            app.findTrendInEVI(section.geometry(), "Senegal");
+          } else if (indicatorSelected == 'seasonLength') {
+            app.findTrendInSeasonLength(); //TODO: write this
+          }
+          // CALL OTHER DEGRADED LAND INDICATORS HERE
+        }
       }
-      // CALL OTHER DEGRADED LAND INDICATORS HERE
     }
     
     // attempt to make the admin layer the topmost
