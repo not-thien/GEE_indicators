@@ -386,7 +386,7 @@ app.boot = function() {
   });
   Map.setCenter(-14.73,14.57, 6);
   ui.root.insert(0, main); // potential issue with resetting charts at a specific position
-  app.createCheckboxes(); // so ugly but it works
+  app.createCheckboxes(); // so ugly, need to initialize the checkboxes before constants
   app.updateFilters();
 };
 
