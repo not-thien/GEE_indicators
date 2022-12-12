@@ -7,6 +7,8 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /**
  * TODO:
+ * add checkbox resetting to map reset
+ * cleanup how the checkbox list is being generated
  * double check gDrive export works
  * add a table export/embed panel that has EVI data for all admin levels
  * separate adminLevel loading from EVI loading
@@ -46,6 +48,7 @@ app.createPanels = function() {
     indicatorSelection: ui.Select({
       items: Object.keys(app.INDICATORS)
     }),
+    // indicatorCheckboxes : app.indicators.checkboxes,
     applyButton: ui.Button('Apply Indicator(s)', app.refreshMapLayer),
   };
   
@@ -53,10 +56,13 @@ app.createPanels = function() {
   app.indicators.panel = ui.Panel({
     widgets: [
       ui.Label('2) Select degraded land indicators', {fontWeight: 'bold'}),
-      ui.Panel([
-        app.indicators.indicatorSelection,
-        app.indicators.applyButton
-      ], ui.Panel.Layout.flow('horizontal'))
+      // ui.Panel([
+      //   app.indicators.indicatorCheckboxes
+      // ], ui.Panel.Layout.flow('vertical')),
+      // ui.Panel([
+      //   app.indicators.indicatorSelection,
+      //   app.indicators.applyButton
+      // ], ui.Panel.Layout.flow('horizontal'))
     ],
     style: app.SECTION_STYLE
   });
@@ -228,6 +234,9 @@ app.createHelpers = function() {
       }
       // CALL OTHER DEGRADED LAND INDICATORS HERE
     }
+    
+    // attempt to make the admin layer the topmost
+    Map.addLayer(adminLevel[0].style(app.polyVis), {}, "Admin Level Borders");
   }
   
   app.findTrendInEVI = function(sectionGeom, sectionName) {
@@ -286,7 +295,7 @@ app.createHelpers = function() {
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
       app.loopThruShapefile();
-      Map.addLayer(app.ADMIN_LEVELS[adminLevel][0].style(app.polyVis), {}, "Admin Level Borders"); //TODO: make top layer everytime
+      // Map.addLayer(app.ADMIN_LEVELS[adminLevel][0].style(app.polyVis), {}, "Admin Level Borders"); //TODO: make top layer everytime
     }
   };
 };
@@ -312,7 +321,8 @@ app.createConstants = function() {
     'Bottom quartile of yearly EVI maxes (linear trend)': 'maxTrend', 
     'Trend in length of season': 'seasonLength',
     'Trend in start of season': 'seasonStart',
-  }
+  };
+  app.SELECTED_INDS;
   app.polyVis = {
     color: '0000ff',
     width: 1,    
@@ -330,8 +340,23 @@ app.createConstants = function() {
   };
 };
 
+ // p sure this below line will run on its own
+app.createCheckboxes = function() {
+  var checkboxes = Object.keys(app.INDICATORS).map(function (ind) {
+    var checkbox = ui.Checkbox({label: ind});
+    app.indicators.panel.add(checkbox);
+    return {'checkbox': checkbox, 'indicator': ind};
+  });
+  
+  // need this to get a list of the checkboxes
+  console.log(checkboxes);
+  app.SELECTED_INDS = checkboxes;
+}
+
+
 /** Creates the application interface. */
 app.boot = function() {
+  
   app.createConstants();
   app.createHelpers();
   app.createPanels();
@@ -348,6 +373,7 @@ app.boot = function() {
   });
   Map.setCenter(-14.73,14.57, 6);
   ui.root.insert(0, main); // potential issue with resetting charts at a specific position
+  app.createCheckboxes(); // so ugly but it works
   app.updateFilters();
 };
 
