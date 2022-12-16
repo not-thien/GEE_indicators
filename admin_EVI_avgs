@@ -14,6 +14,10 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
  * separate adminLevel loading from EVI loading
  * add section selection functionality on click, localizing data to that section
  * add a return button to go back to big picture view
+ * can hardcode threshhold
+ * pixel gradient color based on num of indicators satisfied
+ * upload working version to github repo
+ * 50% transparency on all layers
 */
 
 /**
