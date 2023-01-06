@@ -71,13 +71,7 @@ app.createPanels = function() {
     style: app.SECTION_STYLE
   });
 
-  // need this to get a list of the checkboxes. 
-  app.SELECTED_INDS = Object.keys(app.INDICATORS).map(function (ind) {
-      var checkbox = ui.Checkbox({label: ind});
-      app.indicators.panel.add(checkbox);
-      return {'checkbox': checkbox, 'indicator': ind};
-  });
-
+  
   
   /* The collection filter controls. */
   app.filters = {
@@ -185,6 +179,13 @@ app.createPanels = function() {
 
 /** Creates the app helper functions. */
 app.createHelpers = function() {
+  // need this to get a list of the checkboxes. 
+  app.SELECTED_INDS = Object.keys(app.INDICATORS).map(function (ind) {
+      var checkbox = ui.Checkbox({label: ind});
+      app.indicators.panel.add(checkbox);
+      return {'checkbox': checkbox, 'indicator': ind};
+  });
+
   /**
   * Enables or disables loading mode.
   * @param {boolean} enabled Whether loading mode is enabled.
