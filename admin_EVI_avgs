@@ -234,9 +234,9 @@ app.createHelpers = function() {
             .first();
           // WILL NEED TO REFACTOR WHEN MULTIPLE INDICATORS SUPPORTED
           // var indicatorSelected = app.INDICATORS[app.indicators.indicatorSelection.getValue()];
-          for (var ind in app.SELECTED_INDS) { // loop thru all checkboxes
-            if (ind.checkbox.getValue()) {
-              var indicatorSelected = app.INDICATORS[ind.indicator];
+          app.SELECTED_INDS.forEach(function (indicator) {
+            if (indicator.checkbox.getValue()) {
+              var indicatorSelected = app.INDICATORS[indicator.indicator];
               if (indicatorSelected == 'maxTrend') {
                 app.findTrendInEVI(section.geometry(), name);
               } else if (indicatorSelected == 'seasonLength') {
@@ -244,13 +244,13 @@ app.createHelpers = function() {
               }
               // CALL OTHER DEGRADED LAND INDICATORS HERE
             }
-          }
-        })
-      })
+          })  // loop thru all checkboxes
+        }) //endMap
+      }) //endAggregate_Array
     } else { // special case for whole country admin level
-      for (var ind in app.SELECTED_INDS) {
-        if (ind.checkbox.getValue()) {
-          var indicatorSelected = app.INDICATORS[ind.indicator];
+      app.SELECTED_INDS.forEach(function (indicator) {
+        if (indicator.checkbox.getValue()) {
+          var indicatorSelected = app.INDICATORS[indicator.indicator];
           if (indicatorSelected == 'maxTrend') {
             app.findTrendInEVI(section.geometry(), "Senegal");
           } else if (indicatorSelected == 'seasonLength') {
@@ -258,7 +258,7 @@ app.createHelpers = function() {
           }
           // CALL OTHER DEGRADED LAND INDICATORS HERE
         }
-      }
+      })
     }
     
     // attempt to make the admin layer the topmost
@@ -371,8 +371,8 @@ app.createConstants = function() {
 app.boot = function() {
   
   app.createConstants();
-  app.createHelpers();
   app.createPanels();
+  app.createHelpers();
   var main = ui.Panel({
     widgets: [
       app.intro.panel,
