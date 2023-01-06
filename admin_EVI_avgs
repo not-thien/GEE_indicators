@@ -77,22 +77,19 @@ app.createPanels = function() {
   app.filters = {
     startDate: ui.Textbox('YYYY-MM-DD'),
     endDate: ui.Textbox('YYYY-MM-DD'),
-    applyButton: ui.Button('Apply Date Filter', app.updateFilters),
-    loadingLabel: ui.Label({
-      value: 'Loading...',
-      style: {stretch: 'vertical', color: 'gray', shown: false}
-    })
+    applyButton: ui.Button('Apply Filters/Threshholds', app.updateFilters),
+    threshhold: ui.Textbox('# of Indicators')
   };
 
   /* The panel for the filter control widgets. */
   app.filters.panel = ui.Panel({
     widgets: [
-      ui.Label('3) Select Date Range (if applicable to indicator)', {fontWeight: 'bold'}),
+      ui.Label('3) Select Date Range (if applicable to indicator) & Indicator Threshhold', {fontWeight: 'bold'}),
       ui.Label('Start date', app.HELPER_TEXT_STYLE), app.filters.startDate,
       ui.Label('End date', app.HELPER_TEXT_STYLE), app.filters.endDate,
+      ui.Label('Select number of active indicators to label land as degraded'), app.filters.threshhold,
       ui.Panel([
         app.filters.applyButton,
-        app.filters.loadingLabel
       ], ui.Panel.Layout.flow('horizontal'))
     ],
     style: app.SECTION_STYLE
@@ -233,8 +230,7 @@ app.createHelpers = function() {
             .filter(ee.Filter.equals('NAME_'+adminNum, name))
             .first();
           // WILL NEED TO REFACTOR WHEN MULTIPLE INDICATORS SUPPORTED
-          // var indicatorSelected = app.INDICATORS[app.indicators.indicatorSelection.getValue()];
-          app.SELECTED_INDS.forEach(function (indicator) {
+          app.SELECTED_INDS.forEach(function (indicator) {  // loop thru all checkboxes
             if (indicator.checkbox.getValue()) {
               var indicatorSelected = app.INDICATORS[indicator.indicator];
               if (indicatorSelected == 'maxTrend') {
@@ -244,7 +240,7 @@ app.createHelpers = function() {
               }
               // CALL OTHER DEGRADED LAND INDICATORS HERE
             }
-          })  // loop thru all checkboxes
+          }) 
         }) //endMap
       }) //endAggregate_Array
     } else { // special case for whole country admin level
