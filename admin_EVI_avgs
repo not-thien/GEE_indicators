@@ -60,13 +60,6 @@ app.createPanels = function() {
   app.indicators.panel = ui.Panel({
     widgets: [
       ui.Label('2) Select degraded land indicators', {fontWeight: 'bold'}),
-      // ui.Panel([
-      //   app.indicators.indicatorCheckboxes
-      // ], ui.Panel.Layout.flow('vertical')),
-      // ui.Panel([
-      //   app.indicators.indicatorSelection,
-      //   app.indicators.applyButton
-      // ], ui.Panel.Layout.flow('horizontal'))
     ],
     style: app.SECTION_STYLE
   });
@@ -237,6 +230,9 @@ app.createHelpers = function() {
         }) //endMap
       }) //endAggregate_Array
     } else { // special case for whole country admin level
+      var section = adminFC
+            .filter(ee.Filter.equals('COUNTRY', "Senegal"))
+            .first();
       app.SELECTED_INDS.forEach(function (indicator) {
         if (indicator.checkbox.getValue()) {
           var indicatorSelected = app.INDICATORS[indicator.indicator];
@@ -301,7 +297,7 @@ app.createHelpers = function() {
     var linearFit = timedEviMaxes.select(['DATE_PRODUCT_GENERATED', 'evi']).reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25]));
     // Map.addLayer(linearFit, {min: [0, -15, 0], max: [-0.15, 50, 0.15], bands: ['scale', 'offset', 'scale']}, sectionName);
-    Map.addLayer(worst25, {bands:'p25', min:-1, max:1}, sectionName);
+    Map.addLayer(worst25, {bands:'p25', min:-1, max:1}, sectionName + '25% Yearly EVI max');
   }
 
   /** Refreshes the current map layer based on the UI widget states. */
