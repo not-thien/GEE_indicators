@@ -250,6 +250,7 @@ app.createHelpers = function() {
     Map.addLayer(adminLevel[0].style(app.polyVis), {}, "Admin Level Borders");
   }
   
+  /** Function to calculate maximum EVI trends over time */
   app.findTrendInEVI = function(sectionGeom, sectionName) {
     var EVI = app.L8.filterBounds(sectionGeom);
     // if (app.DATE_RANGE.start) {
@@ -299,7 +300,12 @@ app.createHelpers = function() {
     // Map.addLayer(linearFit, {min: [0, -15, 0], max: [-0.15, 50, 0.15], bands: ['scale', 'offset', 'scale']}, sectionName);
     Map.addLayer(worst25, {bands:'p25', min:-1, max:1}, sectionName + '25% Yearly EVI max');
   }
-
+  
+  /** Function to calculate trend in length of growing season */
+  app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
+    var sectionMODIS = app.MODIS.filterBounds(sectionGeom);
+  }
+  
   /** Refreshes the current map layer based on the UI widget states. */
   app.refreshMapLayer = function() {
     Map.clear();
@@ -342,6 +348,8 @@ app.createConstants = function() {
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
              .filterBounds(senegal.geometry())
              .filterMetadata("CLOUD_COVER", "less_than", 1);
+  app.MODIS = ee.ImageCollection("MODIS/006/MCD12Q2")
+             .filterBounds(senegal.geometry());
   app.SECTION_STYLE = {margin: '20px 0 0 0'};
   app.HELPER_TEXT_STYLE = {
       margin: '8px 0 -3px 8px',
