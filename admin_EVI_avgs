@@ -225,7 +225,7 @@ app.createHelpers = function() {
               if (indicatorSelected == 'maxTrend') {
                 app.findTrendInEVI(section.geometry(), name);
               } else if (indicatorSelected == 'seasonLength') {
-                app.findTrendInSeasonLength(); //TODO: write this
+                app.findTrendInSeasonLength(section.geometry(), name);
               }
               // CALL OTHER DEGRADED LAND INDICATORS HERE
             }
@@ -242,7 +242,7 @@ app.createHelpers = function() {
           if (indicatorSelected == 'maxTrend') {
             app.findTrendInEVI(section.geometry(), "Senegal");
           } else if (indicatorSelected == 'seasonLength') {
-            app.findTrendInSeasonLength(); //TODO: write this
+            app.findTrendInSeasonLength(section.geometry(), "Senegal");
           }
           // CALL OTHER DEGRADED LAND INDICATORS HERE
         }
