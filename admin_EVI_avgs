@@ -314,7 +314,9 @@ app.createHelpers = function() {
       var endDate = year + "-12-31";
       
       var yearMODIS = sectionMODIS.filterDate(startDate, endDate);
-      var seasonLength = yearMODIS.expression(yearMODIS.select('Senescence_1') - yearMODIS.select('Greenup_1'));
+      var seasonLength = yearMODIS.map(function (image) {
+        return image.expression(image.select('Senescence_1') - yearMODIS.select('Greenup_1'));
+      });
       
       seasonLength.push(yearlySznLengths);
     }
