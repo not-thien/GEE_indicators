@@ -310,16 +310,14 @@ app.createHelpers = function() {
     var sectionMODIS = app.MODIS;
     print(sectionMODIS);
     
-    var createTimeBand = function(image) {
-      return image.addBands(image.metadata('system:time_start').divide(1e7));
-    };
-    
     var seasonMODIS = sectionMODIS.map(function(image) {
       return image.expression('SEN - GREEN', {
         'SEN': image.select('Senescence_1'),
         'GREEN': image.select('Greenup_1')
-      });
-    }).map(createTimeBand);
+      })
+      .addBands(image.metadata('system:time_start').divide(1e7))
+      .rename('SeasonLength');
+    });
     
     console.log(seasonMODIS);
     var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
