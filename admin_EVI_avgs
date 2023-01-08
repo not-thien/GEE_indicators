@@ -324,7 +324,7 @@ app.createHelpers = function() {
     var seasonLengths = ee.ImageCollection(yearlySznLengths);
     var linearFit = seasonLengths.reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25]));
-    Map.addLyaer(worst25, {bands:'p25', min:-1, max:1}, sectionName + '25% Season Length Trend');
+    Map.addLayer(worst25, {bands:'p25', min:-1, max:1}, sectionName + '25% Season Length Trend');
   }
   
   /** Refreshes the current map layer based on the UI widget states. */
