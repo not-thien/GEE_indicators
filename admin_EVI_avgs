@@ -309,7 +309,7 @@ app.createHelpers = function() {
     var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
     
     var yearlySznLengths = [];
-    for (year = 2001; year < 2020; year++) {
+    for (var year = 2001; year < 2020; year++) {
       var startDate = year + "-01-01";
       var endDate = year + "-12-31";
       
