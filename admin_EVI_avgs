@@ -318,7 +318,7 @@ app.createHelpers = function() {
         return image.expression(image.select('Senescence_1') - yearMODIS.select('Greenup_1'));
       });
       
-      seasonLength.push(yearlySznLengths);
+      yearlySznLengths.push(seasonLength);
     }
     
     var seasonLengths = ee.ImageCollection(yearlySznLengths);
