@@ -306,7 +306,23 @@ app.createHelpers = function() {
   
   /** Function to calculate trend in length of growing season */
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
-    var sectionMODIS = app.MODIS;
+    var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
+    
+    var yearlySznLengths = [];
+    for (year = 2001; year < 2020; year++) {
+      var startDate = year + "-01-01";
+      var endDate = year + "-12-31";
+      
+      var yearMODIS = sectionMODIS.filterDate(startDate, endDate);
+      var seasonLength = yearMODIS.expression(yearMODIS.select('Senescence_1') - yearMODIS.select('Greenup_1'));
+      
+      seasonLength.push(yearlySznLengths);
+    }
+    
+    var seasonLengths = ee.ImageCollection(yearlySznLengths);
+    var linearFit = seasonLengths.reduce(ee.Reducer.linearFit());
+    var worst25 = linearFit.reduce(ee.Reducer.percentile([25]));
+    Map.addLyaer(worst25, {bands:'p25', min:-1, max:1}, sectionName + '25% Season Length Trend');
   }
   
   /** Refreshes the current map layer based on the UI widget states. */
@@ -355,7 +371,7 @@ app.createConstants = function() {
     return image.clip(geometry);
   }
   app.MODIS = ee.ImageCollection("MODIS/006/MCD12Q2")
-             .map(image => app.clip_senegal(image, senegal.geometry()));
+             .map(function(image) {return app.clip_imgCollection(image, senegal.geometry())});
   app.SECTION_STYLE = {margin: '20px 0 0 0'};
   app.HELPER_TEXT_STYLE = {
       margin: '8px 0 -3px 8px',
