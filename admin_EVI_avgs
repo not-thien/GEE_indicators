@@ -316,7 +316,7 @@ app.createHelpers = function() {
         'GREEN': image.select('Greenup_1')
       })
       .addBands(image.metadata('system:time_start').divide(1e7))
-      .rename('SeasonLength');
+      .rename(['SeasonLength', 'Time Stamp']);
     });
     
     console.log(seasonMODIS);
