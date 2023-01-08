@@ -315,7 +315,10 @@ app.createHelpers = function() {
       
       var yearMODIS = sectionMODIS.filterDate(startDate, endDate);
       var seasonLength = yearMODIS.map(function (image) {
-        return image.expression(image.select('Senescence_1') - image.select('Greenup_1'));
+        return image.expression('sen - green', {
+          'sen': image.select('Senescence_1'),
+          'green': mage.select('Greenup_1')
+        });
       });
       
       yearlySznLengths.push(seasonLength);
