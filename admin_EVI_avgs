@@ -308,28 +308,15 @@ app.createHelpers = function() {
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
     var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
     
-    var yearlySznLengths = [];
-    for (var year = 2001; year < 2020; year++) {
-      var startDate = year + "-12-01";
-      var endDate = year + "-12-31";
-      // in that year, calc growing szn per pixel
-      // find slope for that pixel over all years
-      var yearMODIS = sectionMODIS.filterDate(startDate, endDate).select(['Senescence_1', 'Greenup_1'], ['EndGrowingCycle', 'StartGrowingCycle']);
-      var seasonLength = yearMODIS.map(function (image) {
-        return image.expression('(SEN - GREEN)', {
-          'SEN': image.select('EndGrowingCycle'),
-          'GREEN': image.select('StartGrowingCycle')
-        });
+    let seasonMODIS = sectionMODIS.map(function(image) {
+      return image.expression('SEN - GREEN', {
+        'SEN': image.select('Senescence_1'),
+        'GREEN': image.select('Greenup_1')
       });
-      
-      console.log(seasonLength);
-      
-      yearlySznLengths.push(seasonLength);
-    }
+    });
     
-    console.log(yearlySznLengths);
-    var seasonLengths = ee.ImageCollection(yearlySznLengths);
-    var linearFit = seasonLengths.reduce(ee.Reducer.linearFit());
+    console.log(seasonMODIS);
+    var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25]));
     Map.addLayer(worst25, {bands:'p25', min:-1, max:1}, sectionName + '25% Season Length Trend');
   }
