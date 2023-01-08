@@ -312,14 +312,15 @@ app.createHelpers = function() {
     for (var year = 2001; year < 2020; year++) {
       var startDate = year + "-01-01";
       var endDate = year + "-12-31";
-      
+      // in that year, calc growing szn per pixel
+      // find slope for that pixel over all years
       var yearMODIS = sectionMODIS.filterDate(startDate, endDate);
       var seasonLength = yearMODIS.map(function (image) {
         return image.expression('sen - green', {
           'sen': image.select('Senescence_1'),
-          'green': mage.select('Greenup_1')
+          'green': image.select('Greenup_1')
         });
-      });
+      }).first();
       
       yearlySznLengths.push(seasonLength);
     }
