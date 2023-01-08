@@ -308,9 +308,10 @@ app.createHelpers = function() {
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
     // var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
     var sectionMODIS = app.MODIS;
+    print(sectionMODIS);
     
     var createTimeBand = function(image) {
-      return image.addBands(image.metadata('system:index'));
+      return image.addBands(image.metadata('system:time_start').divide(1e7));
     };
     
     var seasonMODIS = sectionMODIS.map(function(image) {
