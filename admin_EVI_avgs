@@ -309,12 +309,16 @@ app.createHelpers = function() {
     // var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
     var sectionMODIS = app.MODIS;
     
+    var createTimeBand = function(image) {
+      return image.addBands(image.metadata('system:index'));
+    };
+    
     var seasonMODIS = sectionMODIS.map(function(image) {
       return image.expression('SEN - GREEN', {
         'SEN': image.select('Senescence_1'),
         'GREEN': image.select('Greenup_1')
       });
-    });
+    }).map(createTimeBand);
     
     console.log(seasonMODIS);
     var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
