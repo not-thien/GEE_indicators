@@ -308,7 +308,7 @@ app.createHelpers = function() {
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
     var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
     
-    let seasonMODIS = sectionMODIS.map(function(image) {
+    var seasonMODIS = sectionMODIS.map(function(image) {
       return image.expression('SEN - GREEN', {
         'SEN': image.select('Senescence_1'),
         'GREEN': image.select('Greenup_1')
