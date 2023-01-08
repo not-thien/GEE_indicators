@@ -306,7 +306,8 @@ app.createHelpers = function() {
   
   /** Function to calculate trend in length of growing season */
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
-    var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
+    // var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
+    var sectionMODIS = app.MODIS;
     
     var seasonMODIS = sectionMODIS.map(function(image) {
       return image.expression('SEN - GREEN', {
