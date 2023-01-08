@@ -301,7 +301,7 @@ app.createHelpers = function() {
     var linearFit = timedEviMaxes.select(['DATE_PRODUCT_GENERATED', 'evi']).reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25]));
     // Map.addLayer(linearFit, {min: [0, -15, 0], max: [-0.15, 50, 0.15], bands: ['scale', 'offset', 'scale']}, sectionName);
-    Map.addLayer(worst25, {bands:'p25', min:-1, max:1}, sectionName + '25% Yearly EVI max');
+    Map.addLayer(worst25, {bands:'p25', min:-1, max:1}, sectionName + ' 25% Yearly EVI max');
   }
   
   /** Function to calculate trend in length of growing season */
@@ -322,7 +322,7 @@ app.createHelpers = function() {
     console.log(seasonMODIS);
     var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25]));
-    Map.addLayer(worst25, {bands:'p25', min:-1, max:1}, sectionName + '25% Season Length Trend');
+    Map.addLayer(worst25, {bands:'p25', min:-1, max:1}, sectionName + '25% Season Length Trend', true, 0.5);
   }
   
   /** Refreshes the current map layer based on the UI widget states. */
