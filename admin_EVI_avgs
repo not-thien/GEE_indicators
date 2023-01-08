@@ -317,8 +317,8 @@ app.createHelpers = function() {
       var yearMODIS = sectionMODIS.filterDate(startDate, endDate);
       var seasonLength = yearMODIS.map(function (image) {
         return image.expression('sen - green', {
-          'sen': image.select('Senescence_1'),
-          'green': image.select('Greenup_1')
+          'sen': yearMODIS.select('Senescence_1'),
+          'green': yearMODIS.select('Greenup_1')
         });
       }).first();
       
