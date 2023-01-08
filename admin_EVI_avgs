@@ -306,7 +306,7 @@ app.createHelpers = function() {
   
   /** Function to calculate trend in length of growing season */
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
-    var sectionMODIS = app.MODIS.filterBounds(sectionGeom);
+    var sectionMODIS = app.MODIS;
   }
   
   /** Refreshes the current map layer based on the UI widget states. */
@@ -351,8 +351,11 @@ app.createConstants = function() {
   app.L8 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
              .filterBounds(senegal.geometry())
              .filterMetadata("CLOUD_COVER", "less_than", 1);
+  app.clip_imgCollection = function(image, geometry) {
+    return image.clip(geometry);
+  }
   app.MODIS = ee.ImageCollection("MODIS/006/MCD12Q2")
-             .filterBounds(senegal.geometry());
+             .map(image => app.clip_senegal(image, senegal.geometry()));
   app.SECTION_STYLE = {margin: '20px 0 0 0'};
   app.HELPER_TEXT_STYLE = {
       margin: '8px 0 -3px 8px',
