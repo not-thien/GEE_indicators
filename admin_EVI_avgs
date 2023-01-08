@@ -6,18 +6,21 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
     sAdminL4 = ee.FeatureCollection("users/nguy3856/senegalAdminLevel4");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /**
- * TODO:
- * add checkbox resetting to map reset
- * cleanup how the checkbox list is being generated
- * double check gDrive export works
- * add a table export/embed panel that has EVI data for all admin levels
- * separate adminLevel loading from EVI loading
- * add section selection functionality on click, localizing data to that section
- * add a return button to go back to big picture view
+ * MAJOR TODO:
  * can hardcode threshhold
  * pixel gradient color based on num of indicators satisfied
  * upload working version to github repo
  * 50% transparency on all layers
+ * add date filtering to indicator calculations
+ * add checkbox resetting to map reset
+*/
+
+/**
+ * MINOR TODO:
+ * double check gDrive export works
+ * add a table export/embed panel that has EVI data for all admin levels
+ * add section selection functionality on click, localizing data to that section
+ * add a return button to go back to big picture view
 */
 
 /**
