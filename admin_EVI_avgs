@@ -43,10 +43,10 @@ app.createPanels = function() {
   app.intro = {
     panel: ui.Panel([
       ui.Label({
-        value: 'EVI of Senegal Explorer',
+        value: 'Degraded Land Explorer - Senegal',
         style: {fontWeight: 'bold', fontSize: '24px', margin: '10px 5px'}
       }),
-      ui.Label('This app allows you to filter and export images & EVI averages' +
+      ui.Label('This app allows you to choose various indicators for degraded land ' +
                ' over different admin levels from the Landsat 8 dataset.')
     ])
   };
@@ -227,6 +227,8 @@ app.createHelpers = function() {
                 app.findTrendInEVI(section.geometry(), name);
               } else if (indicatorSelected == 'seasonLength') {
                 app.findTrendInSeasonLength(section.geometry(), name);
+              } else if (indicatorSelected == 'seasonStart') {
+                app.findTrendInSeasonStart(section.geometry(), name);
               }
               // CALL OTHER DEGRADED LAND INDICATORS HERE
             }
@@ -244,6 +246,8 @@ app.createHelpers = function() {
             app.findTrendInEVI(section.geometry(), "Senegal");
           } else if (indicatorSelected == 'seasonLength') {
             app.findTrendInSeasonLength(section.geometry(), "Senegal");
+          } else if (indicatorSelected == 'seasonStart') {
+            app.findTrendInSeasonStart(section.geometry(), "Senegal");
           }
           // CALL OTHER DEGRADED LAND INDICATORS HERE
         }
@@ -322,6 +326,24 @@ app.createHelpers = function() {
     var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25]));
     Map.addLayer(worst25, {bands:'p25', min:-656, max:207}, sectionName + ' 25% Season Length Trend', true, 0.5);
+  }
+  
+  /** Function to calculate trend in start of growing season */
+  app.findTrendInSeasonStart = function(sectionGeom, sectionName) {
+    // var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
+    var sectionMODIS = app.MODIS;
+    
+    var seasonMODIS = sectionMODIS.map(function(image) {
+      return image.expression('GREEN', {
+        'GREEN': image.select('Greenup_1')
+      })
+      .addBands(image.metadata('system:time_start').divide(1e7))
+      .rename(['SeasonStart', 'Time Stamp']);
+    });
+    
+    var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
+    var worst25 = linearFit.reduce(ee.Reducer.percentile([75]));
+    Map.addLayer(worst25, {bands:'p75', min:-656, max:207}, sectionName + ' 25% Season Start Trend', true, 0.5);
   }
   
   /** Refreshes the current map layer based on the UI widget states. */
