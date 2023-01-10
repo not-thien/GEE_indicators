@@ -343,7 +343,7 @@ app.createHelpers = function() {
     
     var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([75]));
-    Map.addLayer(worst25, {bands:'p75', min:-57.7, max:80}, sectionName + ' 25% Season Start Trend', true, 1);
+    Map.addLayer(worst25, {bands:'p75', min:-57.7, max:80}, sectionName + ' 25% Season Start Trend', true, 0.5);
   }
   
   /** Refreshes the current map layer based on the UI widget states. */
