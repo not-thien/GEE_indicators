@@ -193,14 +193,12 @@ app.createHelpers = function() {
   app.updateFilters = function() {
     // Set filter variables. & update EVI accordingly
     var start = app.filters.startDate.getValue();
-    if (start) start = ee.Date(start);
     var end = app.filters.endDate.getValue();
+    if (start) start = ee.Date(start);
     if (end) end = ee.Date(end);
     if (start) { //BUG: potential bug where date removed after running once
       app.DATE_RANGE = {start: start,
                         end: end};
-    } else { // will run on startup only
-      app.picker.select.setValue(app.picker.select.items().get(0)); // default top admin level
     }
     app.refreshMapLayer();
   };
@@ -413,6 +411,7 @@ app.boot = function() {
       app.indicators.panel.add(checkbox);
       return {'checkbox': checkbox, 'indicator': ind};
   });
+  app.picker.select.setValue(app.picker.select.items().get(0)); // default top admin level
   var main = ui.Panel({
     widgets: [
       app.intro.panel,
