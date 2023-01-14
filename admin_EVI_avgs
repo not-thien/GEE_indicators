@@ -309,7 +309,6 @@ app.createHelpers = function() {
   
   /** Function to calculate trend in length of growing season */
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
-    // var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
     var sectionMODIS = app.MODIS;
     
     var seasonMODIS = sectionMODIS.map(function(image) {
@@ -328,7 +327,6 @@ app.createHelpers = function() {
   
   /** Function to calculate trend in start of growing season */
   app.findTrendInSeasonStart = function(sectionGeom, sectionName) {
-    // var sectionMODIS = app.MODIS.map(function(image) { return app.clip_imgCollection(image, sectionGeom) });
     var sectionMODIS = app.MODIS;
     
     var seasonMODIS = sectionMODIS.map(function(image) {
@@ -340,7 +338,7 @@ app.createHelpers = function() {
     });
     
     var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
-    var worst25 = linearFit.reduce(ee.Reducer.percentile([75]));
+    var worst25 = linearFit.reduce(ee.Reducer.percentile([75])).clip(sectionGeom);
     Map.addLayer(worst25, {bands:'p75', min:-57.7, max:80}, sectionName + ' 25% Season Start Trend', true, 0.5);
   }
   
