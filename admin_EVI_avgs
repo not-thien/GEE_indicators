@@ -7,7 +7,6 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /**
  * MAJOR TODO:
- * add sectionGeom to seasonLength - figure out what percentile means
  * can hardcode threshhold
  * pixel gradient color based on num of indicators satisfied
  * upload working version to github repo
