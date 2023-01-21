@@ -253,7 +253,7 @@ app.createHelpers = function() {
     
     // attempt to make the admin layer the topmost
     Map.addLayer(adminLevel[0].style(app.polyVis), {}, "Admin Level Borders");
-    // app.calculateIndex();
+    app.calculateIndex();
   }
   
   app.calculateIndex = function() {
