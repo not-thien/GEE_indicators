@@ -8,7 +8,6 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
 /**
  * MAJOR TODO:
  * write calculateIndex()
- * default threshhold to 1 index
  * pixel gradient color based on num of indicators satisfied
  * upload working version to github repo
  * 50% transparency on all layers
