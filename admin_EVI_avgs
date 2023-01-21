@@ -7,8 +7,7 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /**
  * MAJOR TODO:
- * cut indicator 2/3 by admin level borders
- * can hardcode threshhold
+ * write calculateIndex()
  * pixel gradient color based on num of indicators satisfied
  * upload working version to github repo
  * 50% transparency on all layers
@@ -254,6 +253,7 @@ app.createHelpers = function() {
     
     // attempt to make the admin layer the topmost
     Map.addLayer(adminLevel[0].style(app.polyVis), {}, "Admin Level Borders");
+    app.calculateIndex();
   }
   
   /** Function to calculate maximum EVI trends over time */
@@ -303,6 +303,8 @@ app.createHelpers = function() {
     // reduce the ImageCollection w/ linear fit w/ time as x-axis and EVI as y-axis
     var linearFit = timedEviMaxes.select(['DATE_PRODUCT_GENERATED', 'evi']).reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25]));
+    var indexImage = worst25.select('p25').lt(-1); // arbitrary hardcoded threshhold
+    app.INDEX_IMAGES.push(indexImage);
     // Map.addLayer(linearFit, {min: [0, -15, 0], max: [-0.15, 50, 0.15], bands: ['scale', 'offset', 'scale']}, sectionName);
     Map.addLayer(worst25, {bands:'p25', min:-10, max:1.5}, sectionName + ' 25% Yearly EVI max', true, 0.5);
   }
@@ -322,6 +324,8 @@ app.createHelpers = function() {
     
     var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25])).clip(sectionGeom);
+    var indexImage = worst25.select('p25').lt(0); // arbitrary hardcoded threshhold
+    app.INDEX_IMAGES.push(indexImage);
     Map.addLayer(worst25, {bands:'p25', min:-656, max:207}, sectionName + ' 25% Season Length Trend', true, 0.5);
   }
   
@@ -339,6 +343,8 @@ app.createHelpers = function() {
     
     var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([75])).clip(sectionGeom);
+    var indexImage = worst25.select('p25').lt(0); // arbitrary hardcoded threshhold
+    app.INDEX_IMAGES.push(indexImage);
     Map.addLayer(worst25, {bands:'p75', min:-57.7, max:80}, sectionName + ' 25% Season Start Trend', true, 0.5);
   }
   
@@ -374,6 +380,7 @@ app.createConstants = function() {
     'Trend in length of season': 'seasonLength',
     'Trend in start of season': 'seasonStart',
   };
+  app.INDEX_IMAGES = [];
   app.SELECTED_INDS;
   app.polyVis = {
     color: '0000ff',
