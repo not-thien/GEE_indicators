@@ -257,6 +257,11 @@ app.createHelpers = function() {
     // app.calculateIndex();
   }
   
+  app.calculateIndex = function() {
+    var threshhold = app.filters.threshhold.getValue();
+    print(threshhold);
+  }
+  
   /** Function to calculate maximum EVI trends over time */
   app.findTrendInEVI = function(sectionGeom, sectionName) {
     var EVI = app.L8.filterBounds(sectionGeom);
