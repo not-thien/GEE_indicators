@@ -8,6 +8,7 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
 /**
  * MAJOR TODO:
  * write calculateIndex()
+ * default threshhold to 1 index
  * pixel gradient color based on num of indicators satisfied
  * upload working version to github repo
  * 50% transparency on all layers
@@ -74,7 +75,7 @@ app.createPanels = function() {
     startDate: ui.Textbox('YYYY-MM-DD'),
     endDate: ui.Textbox('YYYY-MM-DD'),
     applyButton: ui.Button('Apply Filters/Threshholds', app.updateFilters),
-    threshhold: ui.Textbox('# of Indicators')
+    threshhold: ui.Textbox('# of Indicators', '1')
   };
 
   /* The panel for the filter control widgets. */
@@ -253,7 +254,7 @@ app.createHelpers = function() {
     
     // attempt to make the admin layer the topmost
     Map.addLayer(adminLevel[0].style(app.polyVis), {}, "Admin Level Borders");
-    app.calculateIndex();
+    // app.calculateIndex();
   }
   
   /** Function to calculate maximum EVI trends over time */
