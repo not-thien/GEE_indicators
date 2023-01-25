@@ -260,8 +260,13 @@ app.createHelpers = function() {
   app.calculateIndex = function() {
     var threshhold = app.filters.threshhold.getValue();
     print(threshhold);
+    print(app.INDEX_IMAGES);
     var binaryImages = ee.ImageCollection(app.INDEX_IMAGES);
-    Map.addLayer(binaryImages, {min: 0, max: threshhold}, "Degraded Land Indicators");
+    
+    binaryImages = binaryImages.map(function(image){
+      return image.select(['p.*'], ['Active']);
+    });
+    // Map.addLayer(binaryImages, {min: 0, max: threshhold}, "Degraded Land Indicators");
   }
   
   /** Function to calculate maximum EVI trends over time */
