@@ -200,6 +200,8 @@ app.createHelpers = function() {
       app.DATE_RANGE = {start: start,
                         end: end};
     }
+    app.INDEX_IMAGES = [];
+    app.SELECTED_INDS = {};
     app.refreshMapLayer();
   };
   
@@ -266,7 +268,7 @@ app.createHelpers = function() {
     binaryImages = binaryImages.map(function(image){
       return image.select(['p.*'], ['Active']);
     });
-    // Map.addLayer(binaryImages, {min: 0, max: threshhold}, "Degraded Land Indicators");
+    Map.addLayer(binaryImages, {min: 0, max: threshhold}, "Degraded Land Indicators");
   }
   
   /** Function to calculate maximum EVI trends over time */
