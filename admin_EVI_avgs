@@ -396,7 +396,6 @@ app.createConstants = function() {
     'Trend in start of season': 'seasonStart',
   };
   app.INDEX_IMAGES = [];
-  app.SELECTED_INDS;
   app.polyVis = {
     color: '0000ff',
     width: 1,    
