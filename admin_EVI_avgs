@@ -199,6 +199,7 @@ app.createHelpers = function() {
                         end: end};
     }
     app.INDEX_IMAGES = [];
+    Map.clear();
     app.loopThruShapefile();
   };
   
