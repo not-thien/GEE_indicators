@@ -279,6 +279,8 @@ app.createHelpers = function() {
     } else {
       endYear = "2021";
     }
+    console.log(startYear);
+    console.log(endYear);
 
     var createTimeBand = function(image) {
       return image.addBands(image.metadata('DATE_PRODUCT_GENERATED').divide(1e7));
@@ -288,7 +290,7 @@ app.createHelpers = function() {
     var yearlyMaxes = [];
     
     // loop thru all the years we wanna look at
-    for (var year = app.DATE_RANGE.start.get('year'); year < app.DATE_RANGE.end.get('year'); year++) { 
+    for (var year = startYear; year < endYear; year++) { 
       var startDate = year + "-01-01"
       var endDate = year + "-12-31"
       
