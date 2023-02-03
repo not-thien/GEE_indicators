@@ -199,9 +199,6 @@ app.createHelpers = function() {
                         end: end};
     }
     app.INDEX_IMAGES = [];
-    app.SELECTED_INDS.forEach(function (indicator) {  // loop thru all checkboxes
-      indicator.checkbox.setValue(false);
-    });
     app.refreshMapLayer();
   };
   
@@ -366,6 +363,9 @@ app.createHelpers = function() {
   /** Refreshes the current map layer based on the UI widget states. */
   app.refreshMapLayer = function() {
     Map.clear();
+    app.SELECTED_INDS.forEach(function (indicator) {  // loop thru all checkboxes
+      indicator.checkbox.setValue(false);
+    });
     var adminLevel = app.picker.select.getValue();
     if (adminLevel) {
       app.loopThruShapefile();
