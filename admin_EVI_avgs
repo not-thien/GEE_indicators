@@ -237,7 +237,6 @@ app.createHelpers = function() {
       var section = adminFC
             .filter(ee.Filter.equals('COUNTRY', "Senegal"))
             .first();
-      console.log(app.SELECTED_INDS);
       app.SELECTED_INDS.forEach(function (indicator) {
         if (indicator.checkbox.getValue()) {
           var indicatorSelected = app.INDICATORS[indicator.indicator];
@@ -261,7 +260,7 @@ app.createHelpers = function() {
   /** Based off of the given index threshhold, creates a highlighting layer */
   app.calculateIndex = function() {
     var threshhold = app.filters.threshhold.getValue();
-    print(threshhold);
+    print("index images: ");
     print(app.INDEX_IMAGES);
     var binaryImages = ee.ImageCollection(app.INDEX_IMAGES);
     
