@@ -267,9 +267,18 @@ app.createHelpers = function() {
   /** Function to calculate maximum EVI trends over time */
   app.findTrendInEVI = function(sectionGeom, sectionName) {
     var EVI = app.L8.filterBounds(sectionGeom);
-    // if (app.DATE_RANGE.start) {
-    //   EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
-    // }
+    var startYear, endYear;
+    if (app.DATE_RANGE.start) {
+      // EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
+      startYear = app.DATE_RANGE.start.get('year');
+    } else {
+      startYear = "2012";
+    }
+    if (app.DATE_RANGE.end) {
+      endYear = app.DATE_RANGE.end.get('year');
+    } else {
+      endYear = "2021";
+    }
 
     var createTimeBand = function(image) {
       return image.addBands(image.metadata('DATE_PRODUCT_GENERATED').divide(1e7));
@@ -279,7 +288,7 @@ app.createHelpers = function() {
     var yearlyMaxes = [];
     
     // loop thru all the years we wanna look at
-    for (var year = 2013; year < 2021; year++) { 
+    for (var year = app.DATE_RANGE.start.get('year'); year < app.DATE_RANGE.end.get('year'); year++) { 
       var startDate = year + "-01-01"
       var endDate = year + "-12-31"
       
