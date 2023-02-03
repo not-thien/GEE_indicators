@@ -54,7 +54,7 @@ app.createPanels = function() {
       items: Object.keys(app.INDICATORS)
     }),
     // indicatorCheckboxes : app.indicators.checkboxes,
-    applyButton: ui.Button('Apply Indicator(s)', app.refreshMapLayer),
+    // applyButton: ui.Button('Apply Indicator(s)', app.refreshMapLayer),
   };
   
   /* Indicator selection panel */
@@ -71,7 +71,7 @@ app.createPanels = function() {
   app.filters = {
     startDate: ui.Textbox('YYYY-MM-DD'),
     endDate: ui.Textbox('YYYY-MM-DD'),
-    applyButton: ui.Button('Apply Filters/Threshholds', app.updateFilters),
+    applyButton: ui.Button('Apply Filters/Threshholds to Indicators', app.updateFilters),
     threshhold: ui.Textbox('# of Indicators', '1')
   };
 
@@ -199,7 +199,8 @@ app.createHelpers = function() {
                         end: end};
     }
     app.INDEX_IMAGES = [];
-    app.refreshMapLayer();
+    // app.refreshMapLayer();
+    app.loopThruShapefile();
   };
   
   app.loopThruShapefile = function() {
@@ -363,13 +364,9 @@ app.createHelpers = function() {
   /** Refreshes the current map layer based on the UI widget states. */
   app.refreshMapLayer = function() {
     Map.clear();
-    app.SELECTED_INDS.forEach(function (indicator) {  // loop thru all checkboxes
+    app.SELECTED_INDS.forEach(function (indicator) {  // reset all checkboxes
       indicator.checkbox.setValue(false);
     });
-    var adminLevel = app.picker.select.getValue();
-    if (adminLevel) {
-      app.loopThruShapefile();
-    }
   };
 };
 
