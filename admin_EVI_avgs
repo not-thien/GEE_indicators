@@ -201,7 +201,6 @@ app.createHelpers = function() {
                         end: end};
     }
     app.INDEX_IMAGES = [];
-    app.SELECTED_INDS = {};
     app.refreshMapLayer();
   };
   
@@ -238,6 +237,7 @@ app.createHelpers = function() {
       var section = adminFC
             .filter(ee.Filter.equals('COUNTRY', "Senegal"))
             .first();
+      console.log(app.SELECTED_INDS);
       app.SELECTED_INDS.forEach(function (indicator) {
         if (indicator.checkbox.getValue()) {
           var indicatorSelected = app.INDICATORS[indicator.indicator];
