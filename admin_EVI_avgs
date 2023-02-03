@@ -252,7 +252,7 @@ app.createHelpers = function() {
     }
     
     // attempt to make the admin layer the topmost
-    Map.addLayer(adminLevel[0].style(app.polyVis), {}, "Admin Level Borders");
+    // Map.addLayer(adminLevel[0].style(app.polyVis), {}, "Admin Level Borders");
     app.calculateIndex();
   }
   
@@ -367,6 +367,10 @@ app.createHelpers = function() {
     app.SELECTED_INDS.forEach(function (indicator) {  // reset all checkboxes
       indicator.checkbox.setValue(false);
     });
+    var adminLevel = app.ADMIN_LEVELS[app.picker.select.getValue()];
+    var adminNum = adminLevel[1];
+    var adminFC = adminLevel[0]; // FC = FeatureCollection
+    Map.addLayer(adminLevel[0].style(app.polyVis), {}, "Admin Level Borders");
   };
 };
 
