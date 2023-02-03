@@ -199,7 +199,6 @@ app.createHelpers = function() {
                         end: end};
     }
     app.INDEX_IMAGES = [];
-    // app.refreshMapLayer();
     app.loopThruShapefile();
   };
   
@@ -216,7 +215,6 @@ app.createHelpers = function() {
           var section = adminFC
             .filter(ee.Filter.equals('NAME_'+adminNum, name))
             .first();
-          // WILL NEED TO REFACTOR WHEN MULTIPLE INDICATORS SUPPORTED
           app.SELECTED_INDS.forEach(function (indicator) {  // loop thru all checkboxes
             if (indicator.checkbox.getValue()) {
               var indicatorSelected = app.INDICATORS[indicator.indicator];
@@ -250,9 +248,6 @@ app.createHelpers = function() {
         }
       })
     }
-    
-    // attempt to make the admin layer the topmost
-    // Map.addLayer(adminLevel[0].style(app.polyVis), {}, "Admin Level Borders");
     app.calculateIndex();
   }
   
@@ -318,7 +313,6 @@ app.createHelpers = function() {
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25]));
     var indexImage = worst25.select('p25').lt(-1); // arbitrary hardcoded threshhold
     app.INDEX_IMAGES.push(indexImage);
-    // Map.addLayer(linearFit, {min: [0, -15, 0], max: [-0.15, 50, 0.15], bands: ['scale', 'offset', 'scale']}, sectionName);
     Map.addLayer(worst25, {bands:'p25', min:-10, max:1.5}, sectionName + ' 25% Yearly EVI max', true, 0.5);
   }
   
@@ -447,7 +441,7 @@ app.boot = function() {
   Map.setCenter(-14.73,14.57, 6);
   ui.root.insert(0, main); // potential issue with resetting charts at a specific position
   // app.createCheckboxes(); // so ugly, need to initialize the checkboxes before constants
-  app.updateFilters();
+  // app.updateFilters();
 };
 
 app.boot();
