@@ -200,7 +200,7 @@ app.createHelpers = function() {
     }
     app.INDEX_IMAGES = [];
     app.SELECTED_INDS.forEach(function (indicator) {  // loop thru all checkboxes
-      indicator.checkbox.getValue() = false;
+      indicator.checkbox.setValue(false);
     });
     app.refreshMapLayer();
   };
