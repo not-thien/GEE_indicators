@@ -106,7 +106,7 @@ app.createPanels = function() {
   /* admin Level picker controls */
   app.picker.panel = ui.Panel({
     widgets: [
-      ui.Label('1) Select an admin level', {fontWeight: 'bold'}),
+      ui.Label('1) Select an admin level (WARNING: resets current calculations)', {fontWeight: 'bold'}),
       ui.Panel([
         app.picker.select,
         app.picker.centerButton
