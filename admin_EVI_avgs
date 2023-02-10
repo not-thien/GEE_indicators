@@ -271,7 +271,7 @@ app.createHelpers = function() {
     if (app.DATE_RANGE.start) {
       // EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
       startYear = app.DATE_RANGE.start.get('year');
-      if (Number(startYear) < Number("2013")) {
+      if (Number(startYear) < Number("2013")) { // Data only available after 2013
         startYear = "2013";
       }
     } else {
