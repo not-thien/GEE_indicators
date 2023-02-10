@@ -290,7 +290,7 @@ app.createHelpers = function() {
     var yearlyMaxes = [];
     
     // loop thru all the years we wanna look at
-    for (var year = "2014"; year < "2020"; year++) { 
+    for (var year = "2012"; year < "2020"; year++) { 
       var startDate = year + "-01-01"
       console.log(startDate);
       var endDate = year + "-12-31"
