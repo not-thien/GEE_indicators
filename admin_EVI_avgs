@@ -334,7 +334,7 @@ app.createHelpers = function() {
   /** Function to calculate trend in length of growing season */
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
     var sectionMODIS = app.MODIS;
-    
+    console.log(sectionMODIS);
     // Date filtering logic
     var startYear, endYear;
     if (app.DATE_RANGE.start) {
