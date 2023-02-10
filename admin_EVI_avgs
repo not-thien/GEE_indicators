@@ -267,20 +267,23 @@ app.createHelpers = function() {
   /** Function to calculate maximum EVI trends over time */
   app.findTrendInEVI = function(sectionGeom, sectionName) {
     var EVI = app.L8.filterBounds(sectionGeom);
-    // var startYear, endYear;
-    // if (app.DATE_RANGE.start) {
-    //   // EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
-    //   startYear = app.DATE_RANGE.start.get('year');
-    // } else {
-    //   startYear = "2012";
-    // }
-    // if (app.DATE_RANGE.end) {
-    //   endYear = app.DATE_RANGE.end.get('year');
-    // } else {
-    //   endYear = "2021";
-    // }
-    // console.log(startYear);
-    // console.log(endYear);
+    var startYear, endYear;
+    if (app.DATE_RANGE.start) {
+      // EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
+      startYear = app.DATE_RANGE.start.get('year');
+      if (Number(startYear) < Number("2013")) {
+        startYear = "2013";
+      }
+    } else {
+      startYear = "2013";
+    }
+    if (app.DATE_RANGE.end) {
+      endYear = app.DATE_RANGE.end.get('year');
+    } else {
+      endYear = "2023";
+    }
+    console.log(startYear);
+    console.log(endYear);
 
     var createTimeBand = function(image) {
       return image.addBands(image.metadata('DATE_PRODUCT_GENERATED').divide(1e7));
