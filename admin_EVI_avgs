@@ -9,7 +9,6 @@ var senegalStates = ee.FeatureCollection("users/nguy3856/senegalAdminLevel1"),
  * MAJOR TODO:
  * pixel gradient color based on num of indicators satisfied
  * upload working version to github repo
- * add date filtering to indicator calculations
 */
 
 /**
