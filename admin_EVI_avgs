@@ -267,6 +267,8 @@ app.createHelpers = function() {
   /** Function to calculate maximum EVI trends over time */
   app.findTrendInEVI = function(sectionGeom, sectionName) {
     var EVI = app.L8.filterBounds(sectionGeom);
+    
+    // Date filtering logic
     var startYear, endYear;
     if (app.DATE_RANGE.start) {
       // EVI = EVI.filterDate(app.DATE_RANGE.start, app.DATE_RANGE.end);
@@ -282,9 +284,8 @@ app.createHelpers = function() {
     } else {
       endYear = "2023";
     }
-    console.log(startYear);
-    console.log(endYear);
 
+    // Need to make sure the time band carries over
     var createTimeBand = function(image) {
       return image.addBands(image.metadata('DATE_PRODUCT_GENERATED').divide(1e7));
     };
@@ -295,7 +296,6 @@ app.createHelpers = function() {
     // loop thru all the years we wanna look at
     for (var year = "2013"; year < "2023"; year++) { 
       var startDate = year + "-01-01"
-      console.log(startDate);
       var endDate = year + "-12-31"
       
       // preprocessing the landsat images & adding timestamps
