@@ -372,6 +372,24 @@ app.createHelpers = function() {
   app.findTrendInSeasonStart = function(sectionGeom, sectionName) {
     var sectionMODIS = app.MODIS;
     
+    // Date filtering logic
+    var startYear, endYear;
+    if (app.DATE_RANGE.start) {
+      startYear = app.DATE_RANGE.start.get('year');
+      if (Number(startYear) < Number("2001")) { // MODIS Data only available after 2001
+        startYear = "2001";
+      }
+    } else {
+      startYear = "2001";
+    }
+    if (app.DATE_RANGE.end) {
+      endYear = app.DATE_RANGE.end.get('year');
+    } else {
+      endYear = "2023";
+    }
+    sectionMODIS.filterDate(startYear, endYear);
+
+    
     var seasonMODIS = sectionMODIS.map(function(image) {
       return image.expression('GREEN', {
         'GREEN': image.select('Greenup_1')
