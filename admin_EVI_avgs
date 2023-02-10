@@ -292,6 +292,7 @@ app.createHelpers = function() {
     // loop thru all the years we wanna look at
     for (var year = startYear; year < endYear; year++) { 
       var startDate = year + "-01-01"
+      console.log(startDate);
       var endDate = year + "-12-31"
       
       // preprocessing the landsat images & adding timestamps
