@@ -334,6 +334,7 @@ app.createHelpers = function() {
   /** Function to calculate trend in length of growing season */
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
     var sectionMODIS = app.MODIS;
+    
     // Date filtering logic
     var startYear, endYear;
     if (app.DATE_RANGE.start) {
@@ -349,7 +350,6 @@ app.createHelpers = function() {
     } else {
       endYear = "2023";
     }
-    
     sectionMODIS.filterDate(startYear, endYear);
     
     var seasonMODIS = sectionMODIS.map(function(image) {
