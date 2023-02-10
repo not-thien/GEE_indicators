@@ -335,6 +335,22 @@ app.createHelpers = function() {
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
     var sectionMODIS = app.MODIS;
     
+    // Date filtering logic
+    var startYear, endYear;
+    if (app.DATE_RANGE.start) {
+      startYear = app.DATE_RANGE.start.get('year');
+      if (Number(startYear) < Number("2013")) { // Data only available after 2013
+        startYear = "2013";
+      }
+    } else {
+      startYear = "2013";
+    }
+    if (app.DATE_RANGE.end) {
+      endYear = app.DATE_RANGE.end.get('year');
+    } else {
+      endYear = "2023";
+    }
+    
     var seasonMODIS = sectionMODIS.map(function(image) {
       return image.expression('SEN - GREEN', {
         'SEN': image.select('Senescence_1'),
@@ -346,7 +362,7 @@ app.createHelpers = function() {
     
     var linearFit = seasonMODIS.reduce(ee.Reducer.linearFit());
     var worst25 = linearFit.reduce(ee.Reducer.percentile([25])).clip(sectionGeom);
-    var indexImage = worst25.select('p25').lt(0); // arbitrary hardcoded threshhold
+    var indexImage = worst25.select('p25').lt(0); // arbitrary hardcoded threshhold. RECOMMENDED TO CHANGE THIS
     app.INDEX_IMAGES.push(indexImage);
     Map.addLayer(worst25, {bands:'p25', min:-656, max:207}, sectionName + ' 25% Season Length Trend', true, 0.5);
   }
