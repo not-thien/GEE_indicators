@@ -334,22 +334,23 @@ app.createHelpers = function() {
   /** Function to calculate trend in length of growing season */
   app.findTrendInSeasonLength = function(sectionGeom, sectionName) {
     var sectionMODIS = app.MODIS;
-    console.log(sectionMODIS);
     // Date filtering logic
     var startYear, endYear;
     if (app.DATE_RANGE.start) {
       startYear = app.DATE_RANGE.start.get('year');
-      if (Number(startYear) < Number("2013")) { // Data only available after 2013
-        startYear = "2013";
+      if (Number(startYear) < Number("2001")) { // MODIS Data only available after 2001
+        startYear = "2001";
       }
     } else {
-      startYear = "2013";
+      startYear = "2001";
     }
     if (app.DATE_RANGE.end) {
       endYear = app.DATE_RANGE.end.get('year');
     } else {
       endYear = "2023";
     }
+    
+    sectionMODIS.filterDate(startYear, endYear);
     
     var seasonMODIS = sectionMODIS.map(function(image) {
       return image.expression('SEN - GREEN', {
